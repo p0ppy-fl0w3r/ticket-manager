@@ -10,21 +10,21 @@ using System.Windows.Forms;
 
 namespace Coursework
 {
-    public partial class AdminPanelForm : Form
+    public partial class TicketForm : Form
     {
-        public AdminPanelForm()
+        public TicketForm()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void logoutButton_Click(object sender, EventArgs e)
         {
             Utils.currentForm = Constants.LOGIN_FORM;
         }
 
-        private void hourTextPressed(object sender, KeyEventArgs e)
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            Utils.validateDigitPressed(sender, e, true);
+            Utils.validateDigitPressed(sender, e, false);
         }
     }
 }
