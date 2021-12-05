@@ -11,7 +11,7 @@ namespace Coursework
     static class Utils
     {
 
-        public static string currentForm = "login";
+        public static string currentForm = Constants.LOGIN_FORM;
 
         public static void navigate(Form form, Panel panel)
         {
@@ -39,7 +39,10 @@ namespace Coursework
         public static void validateDigitPressed(object sender, KeyEventArgs e, bool allowDecimal)
         {
             int[] exceptionKeyValues = { 8, 37, 39, 46, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 };
-            int[] decimalKeyValues = { 8, 37, 39, 46, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 110, 190 };
+            int[] numericDecimals = { 110, 190 };
+            
+            var decimalKeyValues = exceptionKeyValues.Union(numericDecimals);
+            
 
 
             if (Char.IsDigit((char)e.KeyValue) || (allowDecimal ? decimalKeyValues : exceptionKeyValues).Contains(e.KeyValue))

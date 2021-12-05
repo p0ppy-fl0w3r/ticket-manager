@@ -30,9 +30,9 @@
         {
             this.chartPanel = new System.Windows.Forms.Panel();
             this.drawerPanel = new System.Windows.Forms.Panel();
-            this.dailyReportButton = new System.Windows.Forms.Button();
-            this.weeklyReportButton = new System.Windows.Forms.Button();
             this.financialReportButton = new System.Windows.Forms.Button();
+            this.weeklyReportButton = new System.Windows.Forms.Button();
+            this.dailyReportButton = new System.Windows.Forms.Button();
             this.drawerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,17 +57,17 @@
             this.drawerPanel.Size = new System.Drawing.Size(222, 486);
             this.drawerPanel.TabIndex = 1;
             // 
-            // dailyReportButton
+            // financialReportButton
             // 
-            this.dailyReportButton.BackColor = System.Drawing.Color.MediumSpringGreen;
-            this.dailyReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dailyReportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dailyReportButton.Location = new System.Drawing.Point(56, 28);
-            this.dailyReportButton.Name = "dailyReportButton";
-            this.dailyReportButton.Size = new System.Drawing.Size(111, 95);
-            this.dailyReportButton.TabIndex = 0;
-            this.dailyReportButton.Text = "Daily Report";
-            this.dailyReportButton.UseVisualStyleBackColor = false;
+            this.financialReportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.financialReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.financialReportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.financialReportButton.Location = new System.Drawing.Point(56, 270);
+            this.financialReportButton.Name = "financialReportButton";
+            this.financialReportButton.Size = new System.Drawing.Size(111, 95);
+            this.financialReportButton.TabIndex = 2;
+            this.financialReportButton.Text = "Financial Report";
+            this.financialReportButton.UseVisualStyleBackColor = false;
             // 
             // weeklyReportButton
             // 
@@ -81,17 +81,18 @@
             this.weeklyReportButton.Text = "Weekly Report";
             this.weeklyReportButton.UseVisualStyleBackColor = false;
             // 
-            // financialReportButton
+            // dailyReportButton
             // 
-            this.financialReportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.financialReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.financialReportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.financialReportButton.Location = new System.Drawing.Point(56, 270);
-            this.financialReportButton.Name = "financialReportButton";
-            this.financialReportButton.Size = new System.Drawing.Size(111, 95);
-            this.financialReportButton.TabIndex = 2;
-            this.financialReportButton.Text = "Financial Report";
-            this.financialReportButton.UseVisualStyleBackColor = false;
+            this.dailyReportButton.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.dailyReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dailyReportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dailyReportButton.Location = new System.Drawing.Point(56, 28);
+            this.dailyReportButton.Name = "dailyReportButton";
+            this.dailyReportButton.Size = new System.Drawing.Size(111, 95);
+            this.dailyReportButton.TabIndex = 0;
+            this.dailyReportButton.Text = "Daily Report";
+            this.dailyReportButton.UseVisualStyleBackColor = false;
+            this.dailyReportButton.Click += new System.EventHandler(this.dailyReportButton_Click);
             // 
             // ReportForm
             // 

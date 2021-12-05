@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coursework.Charts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,5 +17,11 @@ namespace Coursework
         {
             InitializeComponent();
         }
+
+        private void dailyReportButton_Click(object sender, EventArgs e)
+        {
+            Utils.navigate(new DailyReportForm(), chartPanel);
+        }
+
     }
 }
