@@ -56,6 +56,13 @@ namespace Coursework
                             }));
                             break;
 
+                        case Constants.REPORT_FORM:
+                            Invoke(new Action(() =>
+                            {
+                                Utils.navigate(new ReportForm(), mainPanel);
+                            }));
+                            break;
+
                         default:
                             Invoke(new Action(() =>
                             {

@@ -53,6 +53,8 @@ namespace Coursework
             this.nextPersonButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
+            this.durationCombo = new System.Windows.Forms.ComboBox();
+            this.durationLabel = new System.Windows.Forms.Label();
             this.customerInfoPanel.SuspendLayout();
             this.ticketPanel.SuspendLayout();
             this.SuspendLayout();
@@ -72,6 +74,8 @@ namespace Coursework
             // 
             this.customerInfoPanel.BackColor = System.Drawing.Color.GhostWhite;
             this.customerInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.customerInfoPanel.Controls.Add(this.durationCombo);
+            this.customerInfoPanel.Controls.Add(this.durationLabel);
             this.customerInfoPanel.Controls.Add(this.checkBox1);
             this.customerInfoPanel.Controls.Add(this.holidayCheck);
             this.customerInfoPanel.Controls.Add(this.genderCombo);
@@ -91,7 +95,7 @@ namespace Coursework
             this.checkBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.checkBox1.Location = new System.Drawing.Point(345, 88);
+            this.checkBox1.Location = new System.Drawing.Point(478, 87);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(111, 23);
             this.checkBox1.TabIndex = 14;
@@ -104,7 +108,7 @@ namespace Coursework
             this.holidayCheck.Cursor = System.Windows.Forms.Cursors.Hand;
             this.holidayCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.holidayCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.holidayCheck.Location = new System.Drawing.Point(129, 88);
+            this.holidayCheck.Location = new System.Drawing.Point(262, 87);
             this.holidayCheck.Name = "holidayCheck";
             this.holidayCheck.Size = new System.Drawing.Size(139, 23);
             this.holidayCheck.TabIndex = 13;
@@ -316,6 +320,31 @@ namespace Coursework
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = false;
             // 
+            // durationCombo
+            // 
+            this.durationCombo.FormattingEnabled = true;
+            this.durationCombo.Items.AddRange(new object[] {
+            "1 Hour",
+            "2 Hours",
+            "3 Hours",
+            "4 Hours",
+            "Whole Day"});
+            this.durationCombo.Location = new System.Drawing.Point(99, 91);
+            this.durationCombo.Name = "durationCombo";
+            this.durationCombo.Size = new System.Drawing.Size(117, 21);
+            this.durationCombo.TabIndex = 16;
+            this.durationCombo.Text = "--Select Duration--";
+            // 
+            // durationLabel
+            // 
+            this.durationLabel.AutoSize = true;
+            this.durationLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.durationLabel.Location = new System.Drawing.Point(15, 91);
+            this.durationLabel.Name = "durationLabel";
+            this.durationLabel.Size = new System.Drawing.Size(65, 24);
+            this.durationLabel.TabIndex = 15;
+            this.durationLabel.Text = "Duration";
+            // 
             // TicketForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -364,5 +393,7 @@ namespace Coursework
         private Label seniorCountLabel;
         private Label adultCountLabel;
         private Label childCountLabel;
+        private ComboBox durationCombo;
+        private Label durationLabel;
     }
 }

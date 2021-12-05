@@ -12,6 +12,7 @@ namespace Coursework
         public const string LOGIN_FORM = "login";
         public const string ADMIN_FORM = "admin";
         public const string TICKET_FORM = "ticket";
+        public const string REPORT_FORM = "report";
 
     }
 }
