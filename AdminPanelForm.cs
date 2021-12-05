@@ -26,5 +26,10 @@ namespace Coursework
         {
             Utils.validateDigitPressed(sender, e, true);
         }
+
+        private void reportButton_Click(object sender, EventArgs e)
+        {
+            Utils.currentForm = Constants.REPORT_FORM;
+        }
     }
 }

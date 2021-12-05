@@ -33,7 +33,9 @@
             this.financialReportButton = new System.Windows.Forms.Button();
             this.weeklyReportButton = new System.Windows.Forms.Button();
             this.dailyReportButton = new System.Windows.Forms.Button();
+            this.backImage = new System.Windows.Forms.PictureBox();
             this.drawerPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backImage)).BeginInit();
             this.SuspendLayout();
             // 
             // chartPanel
@@ -48,6 +50,7 @@
             // drawerPanel
             // 
             this.drawerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drawerPanel.Controls.Add(this.backImage);
             this.drawerPanel.Controls.Add(this.financialReportButton);
             this.drawerPanel.Controls.Add(this.weeklyReportButton);
             this.drawerPanel.Controls.Add(this.dailyReportButton);
@@ -68,6 +71,7 @@
             this.financialReportButton.TabIndex = 2;
             this.financialReportButton.Text = "Financial Report";
             this.financialReportButton.UseVisualStyleBackColor = false;
+            this.financialReportButton.Click += new System.EventHandler(this.financialReportButton_Click);
             // 
             // weeklyReportButton
             // 
@@ -80,6 +84,7 @@
             this.weeklyReportButton.TabIndex = 1;
             this.weeklyReportButton.Text = "Weekly Report";
             this.weeklyReportButton.UseVisualStyleBackColor = false;
+            this.weeklyReportButton.Click += new System.EventHandler(this.weeklyReportButton_Click);
             // 
             // dailyReportButton
             // 
@@ -94,6 +99,20 @@
             this.dailyReportButton.UseVisualStyleBackColor = false;
             this.dailyReportButton.Click += new System.EventHandler(this.dailyReportButton_Click);
             // 
+            // backImage
+            // 
+            this.backImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.backImage.Image = global::Coursework.Properties.Resources.back;
+            this.backImage.Location = new System.Drawing.Point(56, 403);
+            this.backImage.Name = "backImage";
+            this.backImage.Size = new System.Drawing.Size(100, 50);
+            this.backImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.backImage.TabIndex = 3;
+            this.backImage.TabStop = false;
+            this.backImage.Click += new System.EventHandler(this.backImage_Click);
+            this.backImage.MouseEnter += new System.EventHandler(this.backMouseEnter);
+            this.backImage.MouseLeave += new System.EventHandler(this.backMouseExit);
+            // 
             // ReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,6 +124,7 @@
             this.Name = "ReportForm";
             this.Text = "ReportForm";
             this.drawerPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.backImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -116,5 +136,6 @@
         private System.Windows.Forms.Button financialReportButton;
         private System.Windows.Forms.Button weeklyReportButton;
         private System.Windows.Forms.Button dailyReportButton;
+        private System.Windows.Forms.PictureBox backImage;
     }
 }

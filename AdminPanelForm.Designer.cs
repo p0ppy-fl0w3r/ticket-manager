@@ -67,6 +67,7 @@ namespace Coursework
             this.weekendDisText = new System.Windows.Forms.MaskedTextBox();
             this.weekendLabel = new System.Windows.Forms.Label();
             this.adminSaveButton = new System.Windows.Forms.Button();
+            this.reportButton = new System.Windows.Forms.Button();
             this.pricePanel.SuspendLayout();
             this.discountPanel.SuspendLayout();
             this.SuspendLayout();
@@ -498,6 +499,17 @@ namespace Coursework
             this.adminSaveButton.Text = "Save";
             this.adminSaveButton.UseVisualStyleBackColor = false;
             // 
+            // reportButton
+            // 
+            this.reportButton.Location = new System.Drawing.Point(527, 12);
+            this.reportButton.Name = "reportButton";
+            this.reportButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.reportButton.Size = new System.Drawing.Size(64, 24);
+            this.reportButton.TabIndex = 30;
+            this.reportButton.Text = "Report";
+            this.reportButton.UseVisualStyleBackColor = true;
+            this.reportButton.Click += new System.EventHandler(this.reportButton_Click);
+            // 
             // AdminPanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -505,6 +517,7 @@ namespace Coursework
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(672, 486);
             this.ControlBox = false;
+            this.Controls.Add(this.reportButton);
             this.Controls.Add(this.adminSaveButton);
             this.Controls.Add(this.discountPanel);
             this.Controls.Add(this.discountLabel);
@@ -562,5 +575,6 @@ namespace Coursework
         private Button clearPriceButton;
         private Button clearDiscountButton;
         private Button adminSaveButton;
+        private Button reportButton;
     }
 }

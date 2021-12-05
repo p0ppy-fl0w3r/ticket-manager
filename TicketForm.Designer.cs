@@ -32,6 +32,8 @@ namespace Coursework
         {
             this.logoutButton = new System.Windows.Forms.Button();
             this.customerInfoPanel = new System.Windows.Forms.Panel();
+            this.durationCombo = new System.Windows.Forms.ComboBox();
+            this.durationLabel = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.holidayCheck = new System.Windows.Forms.CheckBox();
             this.genderCombo = new System.Windows.Forms.ComboBox();
@@ -53,8 +55,7 @@ namespace Coursework
             this.nextPersonButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
-            this.durationCombo = new System.Windows.Forms.ComboBox();
-            this.durationLabel = new System.Windows.Forms.Label();
+            this.checkoutButton = new System.Windows.Forms.Button();
             this.customerInfoPanel.SuspendLayout();
             this.ticketPanel.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +89,31 @@ namespace Coursework
             this.customerInfoPanel.Name = "customerInfoPanel";
             this.customerInfoPanel.Size = new System.Drawing.Size(652, 146);
             this.customerInfoPanel.TabIndex = 1;
+            // 
+            // durationCombo
+            // 
+            this.durationCombo.FormattingEnabled = true;
+            this.durationCombo.Items.AddRange(new object[] {
+            "1 Hour",
+            "2 Hours",
+            "3 Hours",
+            "4 Hours",
+            "Whole Day"});
+            this.durationCombo.Location = new System.Drawing.Point(99, 91);
+            this.durationCombo.Name = "durationCombo";
+            this.durationCombo.Size = new System.Drawing.Size(117, 21);
+            this.durationCombo.TabIndex = 16;
+            this.durationCombo.Text = "--Select Duration--";
+            // 
+            // durationLabel
+            // 
+            this.durationLabel.AutoSize = true;
+            this.durationLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.durationLabel.Location = new System.Drawing.Point(15, 91);
+            this.durationLabel.Name = "durationLabel";
+            this.durationLabel.Size = new System.Drawing.Size(65, 24);
+            this.durationLabel.TabIndex = 15;
+            this.durationLabel.Text = "Duration";
             // 
             // checkBox1
             // 
@@ -287,7 +313,7 @@ namespace Coursework
             this.nextPersonButton.BackColor = System.Drawing.Color.PaleGreen;
             this.nextPersonButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextPersonButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.nextPersonButton.Location = new System.Drawing.Point(539, 247);
+            this.nextPersonButton.Location = new System.Drawing.Point(524, 228);
             this.nextPersonButton.Name = "nextPersonButton";
             this.nextPersonButton.Size = new System.Drawing.Size(87, 36);
             this.nextPersonButton.TabIndex = 17;
@@ -300,7 +326,7 @@ namespace Coursework
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.saveButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.saveButton.Location = new System.Drawing.Point(539, 310);
+            this.saveButton.Location = new System.Drawing.Point(575, 385);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(87, 36);
             this.saveButton.TabIndex = 18;
@@ -313,43 +339,31 @@ namespace Coursework
             this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Cancel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.Cancel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Cancel.Location = new System.Drawing.Point(539, 385);
+            this.Cancel.Location = new System.Drawing.Point(474, 385);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(87, 36);
             this.Cancel.TabIndex = 19;
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = false;
             // 
-            // durationCombo
+            // checkoutButton
             // 
-            this.durationCombo.FormattingEnabled = true;
-            this.durationCombo.Items.AddRange(new object[] {
-            "1 Hour",
-            "2 Hours",
-            "3 Hours",
-            "4 Hours",
-            "Whole Day"});
-            this.durationCombo.Location = new System.Drawing.Point(99, 91);
-            this.durationCombo.Name = "durationCombo";
-            this.durationCombo.Size = new System.Drawing.Size(117, 21);
-            this.durationCombo.TabIndex = 16;
-            this.durationCombo.Text = "--Select Duration--";
-            // 
-            // durationLabel
-            // 
-            this.durationLabel.AutoSize = true;
-            this.durationLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.durationLabel.Location = new System.Drawing.Point(15, 91);
-            this.durationLabel.Name = "durationLabel";
-            this.durationLabel.Size = new System.Drawing.Size(65, 24);
-            this.durationLabel.TabIndex = 15;
-            this.durationLabel.Text = "Duration";
+            this.checkoutButton.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.checkoutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkoutButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.checkoutButton.Location = new System.Drawing.Point(524, 299);
+            this.checkoutButton.Name = "checkoutButton";
+            this.checkoutButton.Size = new System.Drawing.Size(87, 36);
+            this.checkoutButton.TabIndex = 20;
+            this.checkoutButton.Text = "Checkout";
+            this.checkoutButton.UseVisualStyleBackColor = false;
             // 
             // TicketForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 486);
+            this.Controls.Add(this.checkoutButton);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nextPersonButton);
@@ -395,5 +409,6 @@ namespace Coursework
         private Label childCountLabel;
         private ComboBox durationCombo;
         private Label durationLabel;
+        private Button checkoutButton;
     }
 }

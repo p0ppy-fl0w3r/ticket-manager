@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Coursework.Charts
 {
-    public partial class DailyReportForm : Form
+    public partial class DailyReport : Form
     {
-        public DailyReportForm()
+        public DailyReport()
         {
             InitializeComponent();
         }

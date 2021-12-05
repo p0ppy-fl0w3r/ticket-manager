@@ -1,6 +1,6 @@
 ﻿namespace Coursework.Charts
 {
-    partial class DailyReportForm
+    partial class DailyReport
     {
         /// <summary>
         /// Required designer variable.

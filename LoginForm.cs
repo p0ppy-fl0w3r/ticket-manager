@@ -20,7 +20,15 @@ namespace Coursework
         private void loginButton_Click(object sender, EventArgs e)
         {
             // TODO add validation here.
-            Utils.currentForm = Constants.REPORT_FORM;
+            // TODO add a permanent solution.
+            if (usernameTextBox.Text == "admin")
+            {
+                Utils.currentForm = Constants.ADMIN_FORM;
+            }
+            else {
+                Utils.currentForm = Constants.TICKET_FORM;
+            }
+            
 
         }
     }
