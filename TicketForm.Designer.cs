@@ -38,11 +38,12 @@ namespace Coursework
             this.holidayCheck = new System.Windows.Forms.CheckBox();
             this.genderCombo = new System.Windows.Forms.ComboBox();
             this.genderLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ageText = new System.Windows.Forms.TextBox();
             this.ageLabel = new System.Windows.Forms.Label();
             this.nameText = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.ticketPanel = new System.Windows.Forms.Panel();
+            this.tickedIdText = new System.Windows.Forms.TextBox();
             this.netTotalLabel = new System.Windows.Forms.Label();
             this.grossTotalLabel = new System.Windows.Forms.Label();
             this.weekendDiscount = new System.Windows.Forms.Label();
@@ -81,7 +82,7 @@ namespace Coursework
             this.customerInfoPanel.Controls.Add(this.holidayCheck);
             this.customerInfoPanel.Controls.Add(this.genderCombo);
             this.customerInfoPanel.Controls.Add(this.genderLabel);
-            this.customerInfoPanel.Controls.Add(this.textBox1);
+            this.customerInfoPanel.Controls.Add(this.ageText);
             this.customerInfoPanel.Controls.Add(this.ageLabel);
             this.customerInfoPanel.Controls.Add(this.nameText);
             this.customerInfoPanel.Controls.Add(this.nameLabel);
@@ -164,15 +165,15 @@ namespace Coursework
             this.genderLabel.TabIndex = 11;
             this.genderLabel.Text = "Gender";
             // 
-            // textBox1
+            // ageText
             // 
-            this.textBox1.AllowDrop = true;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(321, 25);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(40, 20);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.ageText.AllowDrop = true;
+            this.ageText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ageText.Location = new System.Drawing.Point(321, 25);
+            this.ageText.Name = "ageText";
+            this.ageText.Size = new System.Drawing.Size(40, 20);
+            this.ageText.TabIndex = 10;
+            this.ageText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
             // ageLabel
             // 
@@ -207,6 +208,7 @@ namespace Coursework
             // 
             this.ticketPanel.BackColor = System.Drawing.Color.GhostWhite;
             this.ticketPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ticketPanel.Controls.Add(this.tickedIdText);
             this.ticketPanel.Controls.Add(this.netTotalLabel);
             this.ticketPanel.Controls.Add(this.grossTotalLabel);
             this.ticketPanel.Controls.Add(this.weekendDiscount);
@@ -219,6 +221,15 @@ namespace Coursework
             this.ticketPanel.Name = "ticketPanel";
             this.ticketPanel.Size = new System.Drawing.Size(249, 208);
             this.ticketPanel.TabIndex = 15;
+            // 
+            // tickedIdText
+            // 
+            this.tickedIdText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tickedIdText.Location = new System.Drawing.Point(90, 9);
+            this.tickedIdText.Name = "tickedIdText";
+            this.tickedIdText.Size = new System.Drawing.Size(100, 20);
+            this.tickedIdText.TabIndex = 22;
+            this.tickedIdText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ticketKeyPressed);
             // 
             // netTotalLabel
             // 
@@ -294,7 +305,7 @@ namespace Coursework
             // 
             this.ticketIdLabel.AutoSize = true;
             this.ticketIdLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.ticketIdLabel.Location = new System.Drawing.Point(15, 18);
+            this.ticketIdLabel.Location = new System.Drawing.Point(15, 9);
             this.ticketIdLabel.Name = "ticketIdLabel";
             this.ticketIdLabel.Size = new System.Drawing.Size(69, 24);
             this.ticketIdLabel.TabIndex = 15;
@@ -357,6 +368,7 @@ namespace Coursework
             this.checkoutButton.TabIndex = 20;
             this.checkoutButton.Text = "Checkout";
             this.checkoutButton.UseVisualStyleBackColor = false;
+            this.checkoutButton.Click += new System.EventHandler(this.checkoutButton_Click);
             // 
             // TicketForm
             // 
@@ -388,7 +400,7 @@ namespace Coursework
         private Panel customerInfoPanel;
         private TextBox nameText;
         private Label nameLabel;
-        private TextBox textBox1;
+        private TextBox ageText;
         private Label ageLabel;
         private ComboBox genderCombo;
         private Label genderLabel;
@@ -410,5 +422,6 @@ namespace Coursework
         private ComboBox durationCombo;
         private Label durationLabel;
         private Button checkoutButton;
+        private TextBox tickedIdText;
     }
 }

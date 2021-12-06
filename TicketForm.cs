@@ -15,6 +15,7 @@ namespace Coursework
         public TicketForm()
         {
             InitializeComponent();
+            tickedIdText.Enabled = false;
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -25,6 +26,27 @@ namespace Coursework
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             Utils.validateDigitPressed(sender, e, false);
+        }
+
+        private void checkoutButton_Click(object sender, EventArgs e)
+        {
+            tickedIdText.Enabled = true;
+        }
+
+        private void ticketKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (char)13)
+            {
+                tickedIdText.ResetText();
+                tickedIdText.Enabled = false;
+                ticketIdLabel.Focus();   
+                Console.WriteLine("Enter pressed.");
+            }
+            else
+            {
+                // Check if the user pressed a digit.
+                Utils.validateDigitPressed(sender, e, false);
+            }
         }
     }
 }
