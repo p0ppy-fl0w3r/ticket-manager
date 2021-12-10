@@ -84,20 +84,16 @@ namespace Coursework
                 currentIdentidier.groupId = currentIdentidier.groupId + 1;
             }
 
-            System.Diagnostics.Debug.WriteLine(currentIdentidier.ToString());
             writeToFile(currentIdentidier.toJson(), Constants.ID_FILE);
 
         }
 
         public static Identifiers getLastId() {
-            if (File.Exists(Constants.ID_FILE))
+            
+            List<Identifiers> identifiers = getFromFile<Identifiers>(Constants.ID_FILE);
+            if (identifiers.Count > 0)
             {
-                using (StreamReader inputFile = File.OpenText(Constants.ID_FILE))
-                {
-                    string jsonLine = inputFile.ReadLine();
-                    Identifiers identifier = JsonConvert.DeserializeObject<Identifiers>(jsonLine);
-                    return identifier;
-                }
+                return identifiers[0];
             }
 
             Identifiers mIdentifier= new Identifiers();
@@ -115,6 +111,41 @@ namespace Coursework
             }
 
             File.WriteAllText(fileName,data);
+            
+        }
+
+        public static List<T> getFromFile<T>(string fileName) {
+
+            if (File.Exists(fileName))
+            {
+                using (StreamReader inputFile = File.OpenText(fileName))
+                {
+                    List<T> objectList = new List<T>();
+
+                    string jsonLine = inputFile.ReadLine();
+
+                    while (jsonLine != null)
+                    {
+                        T mObject = JsonConvert.DeserializeObject<T>(jsonLine);
+                        objectList.Add(mObject);
+                        jsonLine = inputFile.ReadLine();
+                    }
+                    return objectList;
+                }
+            }
+
+            return new List<T>();
+        }
+
+        public static void appendOnFile(string data, string filename) {
+         
+
+                if (!File.Exists(filename))
+                {
+                    File.Create(filename).Close();
+                }
+
+                File.AppendAllText(filename, data+"\n");
             
         }
 

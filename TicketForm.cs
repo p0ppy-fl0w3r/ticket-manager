@@ -90,13 +90,12 @@ namespace Coursework
         {
             // TODO check if the ticket is of a group
 
+            // TODO add validation
             string name = nameText.Text;    
             string gender = genderCombo.SelectedItem.ToString();
             int age = int.Parse(ageText.Text);
             string startTime = startTimePicker.Text;
             int phoneNumber = int.Parse(phoneNumberText.Text);
-
-            // TODO add validation
 
             Identifiers identifiers = Utils.getLastId();
             int groupId = identifiers.groupId;
@@ -104,7 +103,15 @@ namespace Coursework
 
             Visitor visitor = new Visitor();
             visitor.ticketId = ticketId;
-            visitor.groupId = groupId;
+
+            if (groupCheck.Checked)
+            {
+                visitor.groupId = groupId;
+            }
+            else {
+                visitor.groupId = Constants.NO_GROUP;
+            }
+            
             visitor.name = name;
             visitor.gender = gender;
             visitor.age = age;
@@ -113,9 +120,12 @@ namespace Coursework
             // FIXME Start time only saves the time not the date.
             visitor.startTime = startTime;
 
-            System.Diagnostics.Debug.WriteLine(visitor.ToString());
+            if (!groupCheck.Checked)
+            {
+                Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
+            }
 
-            Utils.setLastId(true, true);
+            Utils.setLastId(true, groupCheck.Checked);
 
         }
     }

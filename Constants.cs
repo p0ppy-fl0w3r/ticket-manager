@@ -17,6 +17,10 @@ namespace Coursework
         // File names
         public const string ID_FILE = "Id.txt";
         public const string VISITOR_FILE = "Visitors.txt";
+        public const string TICKET_FILE = "Ticket.txt";
+
+        // Flags values
+        public const int NO_GROUP = -1;
 
     }
 }

@@ -498,6 +498,7 @@ namespace Coursework
             this.adminSaveButton.TabIndex = 29;
             this.adminSaveButton.Text = "Save";
             this.adminSaveButton.UseVisualStyleBackColor = false;
+            this.adminSaveButton.Click += new System.EventHandler(this.saveButtonClicked);
             // 
             // reportButton
             // 
