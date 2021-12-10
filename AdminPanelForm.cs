@@ -16,6 +16,7 @@ namespace Coursework
         public AdminPanelForm()
         {
             InitializeComponent();
+            setTicketDisplay();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -31,6 +32,32 @@ namespace Coursework
         private void reportButton_Click(object sender, EventArgs e)
         {
             Utils.currentForm = Constants.REPORT_FORM;
+        }
+
+        private void setTicketDisplay()
+        {
+            List<TicketPrice> ticketPrice = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
+            if (ticketPrice.Count > 0)
+            {
+                TicketPrice mTicketPrice = ticketPrice[0];
+
+                childOneText.Text = mTicketPrice.childHourPrice.ToString();
+                childTwoText.Text = mTicketPrice.childTwoHourPrice.ToString();
+                childThreeText.Text = mTicketPrice.childThreeHourPrice.ToString();
+                childFourText.Text = mTicketPrice.childFourHourPrice.ToString();
+                childDayText.Text = mTicketPrice.childDayPrice.ToString();
+                adultOneText.Text = mTicketPrice.hourPrice.ToString();
+                adultTwoText.Text = mTicketPrice.twoHourPrice.ToString();
+                adultThreeText.Text = mTicketPrice.threeHourPrice.ToString();
+                adultFourText.Text = mTicketPrice.fourHourPrice.ToString();
+                adultDayText.Text = mTicketPrice.dayPrice.ToString();
+                holidayDisText.Text = mTicketPrice.holidayDiscount.ToString();
+                weekendDisText.Text = mTicketPrice.weekendDiscount.ToString();
+                seniorDisText.Text = mTicketPrice.seniorDiscount.ToString();
+                groupFiveText.Text = mTicketPrice.groupFiveDiscount.ToString();
+                groupTenText.Text = mTicketPrice.groupTenDiscount.ToString();
+                groupMoreText.Text = mTicketPrice.groupFifteenDiscount.ToString();
+            }                                                                               
         }
 
         private void saveButtonClicked(object sender, EventArgs e)
