@@ -132,6 +132,7 @@ namespace Coursework
             this.clearPriceButton.TabIndex = 17;
             this.clearPriceButton.Text = "Clear";
             this.clearPriceButton.UseVisualStyleBackColor = false;
+            this.clearPriceButton.Click += new System.EventHandler(this.clearPriceButton_Click);
             // 
             // adultDayText
             // 
@@ -365,6 +366,7 @@ namespace Coursework
             this.clearDiscountButton.TabIndex = 18;
             this.clearDiscountButton.Text = "Clear";
             this.clearDiscountButton.UseVisualStyleBackColor = false;
+            this.clearDiscountButton.Click += new System.EventHandler(this.clearDiscountButton_Click);
             // 
             // groupMoreText
             // 

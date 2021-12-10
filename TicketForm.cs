@@ -89,7 +89,6 @@ namespace Coursework
         private void saveButtonClicked(object sender, EventArgs e)
         {
             // TODO check if the ticket is of a group
-
             // TODO add validation
             string name = nameText.Text;    
             string gender = genderCombo.SelectedItem.ToString();

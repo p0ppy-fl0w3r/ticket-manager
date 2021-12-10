@@ -2,10 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Coursework
@@ -54,9 +55,9 @@ namespace Coursework
         {
             int[] exceptionKeyValues = { 8, 37, 39, 46, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 };
             int[] numericDecimals = { 110, 190 };
-            
+
             var decimalKeyValues = exceptionKeyValues.Union(numericDecimals);
-            
+
 
 
             if (Char.IsDigit((char)e.KeyValue) || (allowDecimal ? decimalKeyValues : exceptionKeyValues).Contains(e.KeyValue))
@@ -75,12 +76,15 @@ namespace Coursework
         /// </summary>
         /// <param name="ticketId"></param>
         /// <param name="groupId"></param>
-        public static void setLastId(bool setTicketId, bool setGroupId) {
+        public static void setLastId(bool setTicketId, bool setGroupId)
+        {
             Identifiers currentIdentidier = getLastId();
-            if (setTicketId) {
+            if (setTicketId)
+            {
                 currentIdentidier.ticketId = currentIdentidier.ticketId + 1;
             }
-            if (setGroupId) {
+            if (setGroupId)
+            {
                 currentIdentidier.groupId = currentIdentidier.groupId + 1;
             }
 
@@ -88,15 +92,16 @@ namespace Coursework
 
         }
 
-        public static Identifiers getLastId() {
-            
+        public static Identifiers getLastId()
+        {
+
             List<Identifiers> identifiers = getFromFile<Identifiers>(Constants.ID_FILE);
             if (identifiers.Count > 0)
             {
                 return identifiers[0];
             }
 
-            Identifiers mIdentifier= new Identifiers();
+            Identifiers mIdentifier = new Identifiers();
             mIdentifier.ticketId = 1000000;
             mIdentifier.groupId = 0;
             return mIdentifier;
@@ -110,11 +115,12 @@ namespace Coursework
                 File.Create(fileName).Close();
             }
 
-            File.WriteAllText(fileName,data);
-            
+            File.WriteAllText(fileName, data);
+
         }
 
-        public static List<T> getFromFile<T>(string fileName) {
+        public static List<T> getFromFile<T>(string fileName)
+        {
 
             if (File.Exists(fileName))
             {
@@ -137,16 +143,31 @@ namespace Coursework
             return new List<T>();
         }
 
-        public static void appendOnFile(string data, string filename) {
-         
+        public static void appendOnFile(string data, string filename)
+        {
 
-                if (!File.Exists(filename))
-                {
-                    File.Create(filename).Close();
-                }
 
-                File.AppendAllText(filename, data+"\n");
-            
+            if (!File.Exists(filename))
+            {
+                File.Create(filename).Close();
+            }
+
+            File.AppendAllText(filename, data + "\n");
+
+        }
+
+        public static void animateTextBase(TextBoxBase tBase)
+        {
+            Thread animationThread = new Thread(() =>
+            {
+                Color initialBackColor = tBase.BackColor;
+
+                tBase.BackColor = Color.Red;
+                Thread.Sleep(500);
+                tBase.BackColor = initialBackColor;
+            });
+
+            animationThread.Start();
         }
 
     }
