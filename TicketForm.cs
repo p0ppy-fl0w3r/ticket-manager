@@ -67,7 +67,7 @@ namespace Coursework
         private void nextPersonButton_Click(object sender, EventArgs e)
         {
             // TODO add validation
-            
+
             groupListBox.SelectedIndex = -1;
             groupListBox.Items.Add(nameText.Text);
 
@@ -80,52 +80,96 @@ namespace Coursework
             if (e.KeyCode == Keys.Delete)
             {
                 var selectedItem = groupListBox.SelectedItem;
-                if (selectedItem != null) {
-                    groupListBox.Items.Remove(selectedItem); 
+                if (selectedItem != null)
+                {
+                    groupListBox.Items.Remove(selectedItem);
                 }
             }
         }
 
+
+
         private void saveButtonClicked(object sender, EventArgs e)
         {
             // TODO check if the ticket is of a group
-            // TODO add validation
-            string name = nameText.Text;    
-            string gender = genderCombo.SelectedItem.ToString();
-            int age = int.Parse(ageText.Text);
-            string startTime = startTimePicker.Text;
-            int phoneNumber = int.Parse(phoneNumberText.Text);
 
-            Identifiers identifiers = Utils.getLastId();
-            int groupId = identifiers.groupId;
-            int ticketId = identifiers.ticketId;
 
-            Visitor visitor = new Visitor();
-            visitor.ticketId = ticketId;
 
-            if (groupCheck.Checked)
+            bool isValid = validateFields();
+            if (isValid)
             {
-                visitor.groupId = groupId;
+                string name = nameText.Text;
+                string gender = genderCombo.SelectedItem.ToString();
+                int age = int.Parse(ageText.Text);
+                string startTime = startTimePicker.Text;
+                int phoneNumber = int.Parse(phoneNumberText.Text);
+
+                Identifiers identifiers = Utils.getLastId();
+                int groupId = identifiers.groupId;
+                int ticketId = identifiers.ticketId;
+
+                Visitor visitor = new Visitor();
+                visitor.ticketId = ticketId;
+
+                if (groupCheck.Checked)
+                {
+                    visitor.groupId = groupId;
+                }
+                else
+                {
+                    visitor.groupId = Constants.NO_GROUP;
+                }
+
+                visitor.name = name;
+                visitor.gender = gender;
+                visitor.age = age;
+                visitor.phoneNumber = phoneNumber;
+
+                // FIXME Start time only saves the time not the date.
+                visitor.startTime = startTime;
+
+                if (!groupCheck.Checked)
+                {
+                    Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
+                }
+
+                Utils.setLastId(true, groupCheck.Checked);
             }
             else {
-                visitor.groupId = Constants.NO_GROUP;
+                MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            
-            visitor.name = name;
-            visitor.gender = gender;
-            visitor.age = age;
-            visitor.phoneNumber = phoneNumber;
 
-            // FIXME Start time only saves the time not the date.
-            visitor.startTime = startTime;
+        }
 
-            if (!groupCheck.Checked)
+        private bool validateFields()
+        {
+            bool isValid = true;
+            if (nameText.Text.Length < 1)
             {
-                Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
+                Utils.animateTextBase(nameText);
+                isValid = false;
             }
 
-            Utils.setLastId(true, groupCheck.Checked);
+            if (ageText.Text.Length < 1)
+            {
+                Utils.animateTextBase(ageText);
+                isValid = false;
+            }
 
+            if (phoneNumberText.Text.Trim().Length > 0 && phoneNumberText.Text.Trim().Length < 9)
+            {
+                Utils.animateTextBase(phoneNumberText);
+                isValid = false;
+            }
+
+            if (genderCombo.SelectedItem == null)
+            {
+                Utils.animateTextBase(genderLabel);
+                isValid = false;
+            }
+
+
+            return isValid;
         }
     }
 }

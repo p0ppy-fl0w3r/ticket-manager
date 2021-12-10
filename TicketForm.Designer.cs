@@ -32,6 +32,11 @@ namespace Coursework
         {
             this.logoutButton = new System.Windows.Forms.Button();
             this.customerInfoPanel = new System.Windows.Forms.Panel();
+            this.phoneNumberText = new System.Windows.Forms.MaskedTextBox();
+            this.phoneNumberLabel = new System.Windows.Forms.Label();
+            this.endTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.endTimeLabel = new System.Windows.Forms.Label();
+            this.startTimePicker = new System.Windows.Forms.DateTimePicker();
             this.startTimeLabel = new System.Windows.Forms.Label();
             this.groupCheck = new System.Windows.Forms.CheckBox();
             this.holidayCheck = new System.Windows.Forms.CheckBox();
@@ -56,11 +61,6 @@ namespace Coursework
             this.saveButton = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.checkoutButton = new System.Windows.Forms.Button();
-            this.startTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.endTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.endTimeLabel = new System.Windows.Forms.Label();
-            this.phoneNumberLabel = new System.Windows.Forms.Label();
-            this.phoneNumberText = new System.Windows.Forms.MaskedTextBox();
             this.customerInfoPanel.SuspendLayout();
             this.ticketPanel.SuspendLayout();
             this.SuspendLayout();
@@ -98,6 +98,57 @@ namespace Coursework
             this.customerInfoPanel.Name = "customerInfoPanel";
             this.customerInfoPanel.Size = new System.Drawing.Size(652, 180);
             this.customerInfoPanel.TabIndex = 1;
+            // 
+            // phoneNumberText
+            // 
+            this.phoneNumberText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.phoneNumberText.Location = new System.Drawing.Point(96, 139);
+            this.phoneNumberText.Mask = "0000000000";
+            this.phoneNumberText.Name = "phoneNumberText";
+            this.phoneNumberText.Size = new System.Drawing.Size(100, 20);
+            this.phoneNumberText.TabIndex = 20;
+            // 
+            // phoneNumberLabel
+            // 
+            this.phoneNumberLabel.AutoSize = true;
+            this.phoneNumberLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.phoneNumberLabel.Location = new System.Drawing.Point(15, 137);
+            this.phoneNumberLabel.Name = "phoneNumberLabel";
+            this.phoneNumberLabel.Size = new System.Drawing.Size(73, 24);
+            this.phoneNumberLabel.TabIndex = 19;
+            this.phoneNumberLabel.Text = "Phone no.";
+            // 
+            // endTimePicker
+            // 
+            this.endTimePicker.CustomFormat = "hh:mm tt";
+            this.endTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.endTimePicker.Location = new System.Drawing.Point(339, 134);
+            this.endTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.endTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.endTimePicker.Name = "endTimePicker";
+            this.endTimePicker.Size = new System.Drawing.Size(102, 20);
+            this.endTimePicker.TabIndex = 18;
+            // 
+            // endTimeLabel
+            // 
+            this.endTimeLabel.AutoSize = true;
+            this.endTimeLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.endTimeLabel.Location = new System.Drawing.Point(258, 136);
+            this.endTimeLabel.Name = "endTimeLabel";
+            this.endTimeLabel.Size = new System.Drawing.Size(68, 24);
+            this.endTimeLabel.TabIndex = 17;
+            this.endTimeLabel.Text = "End Time";
+            // 
+            // startTimePicker
+            // 
+            this.startTimePicker.CustomFormat = "hh:mm tt";
+            this.startTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startTimePicker.Location = new System.Drawing.Point(96, 78);
+            this.startTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.startTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.startTimePicker.Name = "startTimePicker";
+            this.startTimePicker.Size = new System.Drawing.Size(102, 20);
+            this.startTimePicker.TabIndex = 16;
             // 
             // startTimeLabel
             // 
@@ -366,56 +417,6 @@ namespace Coursework
             this.checkoutButton.Text = "Checkout";
             this.checkoutButton.UseVisualStyleBackColor = false;
             this.checkoutButton.Click += new System.EventHandler(this.checkoutButton_Click);
-            // 
-            // startTimePicker
-            // 
-            this.startTimePicker.CustomFormat = "hh:mm tt";
-            this.startTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.startTimePicker.Location = new System.Drawing.Point(96, 78);
-            this.startTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
-            this.startTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
-            this.startTimePicker.Name = "startTimePicker";
-            this.startTimePicker.Size = new System.Drawing.Size(102, 20);
-            this.startTimePicker.TabIndex = 16;
-            // 
-            // endTimePicker
-            // 
-            this.endTimePicker.CustomFormat = "hh:mm tt";
-            this.endTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.endTimePicker.Location = new System.Drawing.Point(339, 134);
-            this.endTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
-            this.endTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
-            this.endTimePicker.Name = "endTimePicker";
-            this.endTimePicker.Size = new System.Drawing.Size(102, 20);
-            this.endTimePicker.TabIndex = 18;
-            // 
-            // endTimeLabel
-            // 
-            this.endTimeLabel.AutoSize = true;
-            this.endTimeLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.endTimeLabel.Location = new System.Drawing.Point(258, 136);
-            this.endTimeLabel.Name = "endTimeLabel";
-            this.endTimeLabel.Size = new System.Drawing.Size(68, 24);
-            this.endTimeLabel.TabIndex = 17;
-            this.endTimeLabel.Text = "End Time";
-            // 
-            // phoneNumberLabel
-            // 
-            this.phoneNumberLabel.AutoSize = true;
-            this.phoneNumberLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.phoneNumberLabel.Location = new System.Drawing.Point(15, 137);
-            this.phoneNumberLabel.Name = "phoneNumberLabel";
-            this.phoneNumberLabel.Size = new System.Drawing.Size(73, 24);
-            this.phoneNumberLabel.TabIndex = 19;
-            this.phoneNumberLabel.Text = "Phone no.";
-            // 
-            // phoneNumberText
-            // 
-            this.phoneNumberText.Location = new System.Drawing.Point(96, 139);
-            this.phoneNumberText.Mask = "0000000000";
-            this.phoneNumberText.Name = "phoneNumberText";
-            this.phoneNumberText.Size = new System.Drawing.Size(100, 20);
-            this.phoneNumberText.TabIndex = 20;
             // 
             // TicketForm
             // 

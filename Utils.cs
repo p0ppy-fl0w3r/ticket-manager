@@ -156,7 +156,13 @@ namespace Coursework
 
         }
 
-        public static void animateTextBase(TextBoxBase tBase)
+        /// <summary>
+        /// Animates the supplied Control with an error animation.
+        /// <para>The program will throw an InvalidOperationException if the borders of textBoxes are 3D.
+        /// Make sure that the borders are 'FixedSingle' before calling this method.</para>
+        /// </summary>
+        /// <param name="tBase"></param>
+        public static void animateTextBase(Control tBase)
         {
             Thread animationThread = new Thread(() =>
             {
