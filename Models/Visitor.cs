@@ -18,7 +18,7 @@ namespace Coursework.Models
         public string startTime { get; set; }
         public string endTime { get; set; }
         public int groupId { get; set; }
-        public int phoneNumber { get; set; }
+        public long phoneNumber { get; set; }
         public double checkoutPrice { get; set; }
 
         public override string ToString() {

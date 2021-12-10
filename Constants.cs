@@ -21,6 +21,7 @@ namespace Coursework
 
         // Flags values
         public const int NO_GROUP = -1;
+        public const int NO_NUMBER = -1;
 
     }
 }

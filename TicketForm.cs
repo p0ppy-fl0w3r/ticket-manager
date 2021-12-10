@@ -13,6 +13,7 @@ namespace Coursework
 {
     public partial class TicketForm : Form
     {
+        private List<Visitor> groupVisitors = new List<Visitor>();
         public TicketForm()
         {
             InitializeComponent();
@@ -66,12 +67,43 @@ namespace Coursework
 
         private void nextPersonButton_Click(object sender, EventArgs e)
         {
-            // TODO add validation
+            if (validateFields())
+            {
+                holidayCheck.Enabled = false;
+                groupCheck.Enabled = false;
+                startTimePicker.Enabled = false;
 
-            groupListBox.SelectedIndex = -1;
-            groupListBox.Items.Add(nameText.Text);
+                string name = nameText.Text;
+                string gender = genderCombo.SelectedItem.ToString();
+                int age = int.Parse(ageText.Text);
+                string startTime = startTimePicker.Value.ToString();
 
-            // TODO save the info in an object
+                long phoneNumber;
+                if (phoneNumberText.Text.Trim().Length == 0)
+                {
+                    phoneNumber = 0;
+                }
+                else
+                {
+                    phoneNumber = long.Parse(phoneNumberText.Text);
+                }
+
+                Visitor visitor = new Visitor();
+                visitor.name = name;
+                visitor.gender = gender;
+                visitor.age = age;
+                visitor.phoneNumber = phoneNumber;
+                visitor.startTime = startTime;
+
+                groupVisitors.Add(visitor);
+
+                groupListBox.SelectedIndex = -1;
+                groupListBox.Items.Add(nameText.Text);
+            }
+            else
+            {
+                MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         // Make sure the focus is on the list box before listening to key-down events.
@@ -82,6 +114,7 @@ namespace Coursework
                 var selectedItem = groupListBox.SelectedItem;
                 if (selectedItem != null)
                 {
+                    groupVisitors.RemoveAt(groupListBox.SelectedIndex);
                     groupListBox.Items.Remove(selectedItem);
                 }
             }
@@ -91,52 +124,58 @@ namespace Coursework
 
         private void saveButtonClicked(object sender, EventArgs e)
         {
-            // TODO check if the ticket is of a group
+            // TODO reset fields 
 
+            Identifiers identifiers = Utils.getLastId();
+            int groupId = identifiers.groupId;
+            int ticketId = identifiers.ticketId;
 
-
-            bool isValid = validateFields();
-            if (isValid)
+            if (!groupCheck.Checked)
             {
-                string name = nameText.Text;
-                string gender = genderCombo.SelectedItem.ToString();
-                int age = int.Parse(ageText.Text);
-                string startTime = startTimePicker.Text;
-                int phoneNumber = int.Parse(phoneNumberText.Text);
-
-                Identifiers identifiers = Utils.getLastId();
-                int groupId = identifiers.groupId;
-                int ticketId = identifiers.ticketId;
-
-                Visitor visitor = new Visitor();
-                visitor.ticketId = ticketId;
-
-                if (groupCheck.Checked)
+                if (validateFields())
                 {
-                    visitor.groupId = groupId;
+                    string name = nameText.Text;
+                    string gender = genderCombo.SelectedItem.ToString();
+                    int age = int.Parse(ageText.Text);
+                    string startTime = startTimePicker.Value.ToString();
+                    int phoneNumber;
+                    if (phoneNumberText.Text.Trim().Length == 0)
+                    {
+                        phoneNumber = Constants.NO_NUMBER;
+                    }
+                    else
+                    {
+                        phoneNumber = int.Parse(phoneNumberText.Text);
+                    }
+
+                    Visitor visitor = new Visitor();
+                    visitor.ticketId = ticketId;
+                    visitor.groupId = Constants.NO_GROUP;
+                    visitor.name = name;
+                    visitor.gender = gender;
+                    visitor.age = age;
+                    visitor.phoneNumber = phoneNumber;
+                    visitor.startTime = startTime;
+
+                    Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
+                    Utils.setLastId(true, groupCheck.Checked);
                 }
                 else
                 {
-                    visitor.groupId = Constants.NO_GROUP;
+                    MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-
-                visitor.name = name;
-                visitor.gender = gender;
-                visitor.age = age;
-                visitor.phoneNumber = phoneNumber;
-
-                // FIXME Start time only saves the time not the date.
-                visitor.startTime = startTime;
-
-                if (!groupCheck.Checked)
+            }
+            else
+            {
+                foreach (Visitor visitor in groupVisitors)
                 {
+                    visitor.ticketId = ticketId;
+                    visitor.groupId = groupId;
+
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                 }
 
                 Utils.setLastId(true, groupCheck.Checked);
-            }
-            else {
-                MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
