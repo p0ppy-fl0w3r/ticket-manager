@@ -14,5 +14,9 @@ namespace Coursework
         public const string TICKET_FORM = "ticket";
         public const string REPORT_FORM = "report";
 
+        // File names
+        public const string ID_FILE = "Id.txt";
+        public const string VISITOR_FILE = "Visitors.txt";
+
     }
 }

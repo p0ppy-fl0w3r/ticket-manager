@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coursework.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,17 @@ namespace Coursework
         public TicketForm()
         {
             InitializeComponent();
+
+            setInitState();
+
+        }
+
+        private void setInitState()
+        {
             tickedIdText.Enabled = false;
+            endTimeLabel.Visible = false;
+            endTimePicker.Visible = false;
+            nextPersonButton.Enabled = false;
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -39,14 +50,73 @@ namespace Coursework
             {
                 tickedIdText.ResetText();
                 tickedIdText.Enabled = false;
-                ticketIdLabel.Focus();   
-                Console.WriteLine("Enter pressed.");
+                ticketIdLabel.Focus();
             }
             else
             {
                 // Check if the user pressed a digit.
                 Utils.validateDigitPressed(sender, e, false);
             }
+        }
+
+        private void groupTicketChanged(object sender, EventArgs e)
+        {
+            nextPersonButton.Enabled = groupCheck.Checked;
+        }
+
+        private void nextPersonButton_Click(object sender, EventArgs e)
+        {
+            // TODO add validation
+            
+            groupListBox.SelectedIndex = -1;
+            groupListBox.Items.Add(nameText.Text);
+
+            // TODO save the info in an object
+        }
+
+        // Make sure the focus is on the list box before listening to key-down events.
+        private void groupListKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                var selectedItem = groupListBox.SelectedItem;
+                if (selectedItem != null) {
+                    groupListBox.Items.Remove(selectedItem); 
+                }
+            }
+        }
+
+        private void saveButtonClicked(object sender, EventArgs e)
+        {
+            // TODO check if the ticket is of a group
+
+            string name = nameText.Text;    
+            string gender = genderCombo.SelectedItem.ToString();
+            int age = int.Parse(ageText.Text);
+            string startTime = startTimePicker.Text;
+            int phoneNumber = int.Parse(phoneNumberText.Text);
+
+            // TODO add validation
+
+            Identifiers identifiers = Utils.getLastId();
+            int groupId = identifiers.groupId;
+            int ticketId = identifiers.ticketId;
+
+            Visitor visitor = new Visitor();
+            visitor.ticketId = ticketId;
+            visitor.groupId = groupId;
+            visitor.name = name;
+            visitor.gender = gender;
+            visitor.age = age;
+            visitor.phoneNumber = phoneNumber;
+
+            // FIXME Start time only saves the time not the date.
+            visitor.startTime = startTime;
+
+            System.Diagnostics.Debug.WriteLine(visitor.ToString());
+
+            Utils.setLastId(true, true);
+
         }
     }
 }

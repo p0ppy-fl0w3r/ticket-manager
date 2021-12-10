@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Coursework.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,12 +10,17 @@ using System.Windows.Forms;
 
 namespace Coursework
 {
-    // TODO add doc comment to all the functions below.
     static class Utils
     {
 
         public static string currentForm = Constants.LOGIN_FORM;
 
+
+        /// <summary>
+        /// Clears the panel and adds the form to it.
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="panel"></param>
         public static void navigate(Form form, Panel panel)
         {
             form.TopLevel = false;
@@ -36,6 +44,12 @@ namespace Coursework
             form.Show();
         }
 
+        /// <summary>
+        /// Checks the key-down event to see if the user pressed a digit.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="allowDecimal"></param>
         public static void validateDigitPressed(object sender, KeyEventArgs e, bool allowDecimal)
         {
             int[] exceptionKeyValues = { 8, 37, 39, 46, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 };
@@ -53,6 +67,55 @@ namespace Coursework
             {
                 ((TextBox)sender).ReadOnly = true;
             }
+        }
+
+        /// <summary>
+        ///  Increments and saves the ticketId and groupId in a file. Pass a 'false'
+        ///  if you do not wish to override the previous IDs.
+        /// </summary>
+        /// <param name="ticketId"></param>
+        /// <param name="groupId"></param>
+        public static void setLastId(bool setTicketId, bool setGroupId) {
+            Identifiers currentIdentidier = getLastId();
+            if (setTicketId) {
+                currentIdentidier.ticketId = currentIdentidier.ticketId + 1;
+            }
+            if (setGroupId) {
+                currentIdentidier.groupId = currentIdentidier.groupId + 1;
+            }
+
+            System.Diagnostics.Debug.WriteLine(currentIdentidier.ToString());
+            writeToFile(currentIdentidier.toJson(), Constants.ID_FILE);
+
+        }
+
+        public static Identifiers getLastId() {
+            if (File.Exists(Constants.ID_FILE))
+            {
+                using (StreamReader inputFile = File.OpenText(Constants.ID_FILE))
+                {
+                    string jsonLine = inputFile.ReadLine();
+                    Identifiers identifier = JsonConvert.DeserializeObject<Identifiers>(jsonLine);
+                    return identifier;
+                }
+            }
+
+            Identifiers mIdentifier= new Identifiers();
+            mIdentifier.ticketId = 1000000;
+            mIdentifier.groupId = 0;
+            return mIdentifier;
+        }
+
+        public static void writeToFile(string data, string fileName)
+        {
+
+            if (!File.Exists(fileName))
+            {
+                File.Create(fileName).Close();
+            }
+
+            File.WriteAllText(fileName,data);
+            
         }
 
     }

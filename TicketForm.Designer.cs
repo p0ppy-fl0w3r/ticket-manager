@@ -32,9 +32,8 @@ namespace Coursework
         {
             this.logoutButton = new System.Windows.Forms.Button();
             this.customerInfoPanel = new System.Windows.Forms.Panel();
-            this.durationCombo = new System.Windows.Forms.ComboBox();
-            this.durationLabel = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.startTimeLabel = new System.Windows.Forms.Label();
+            this.groupCheck = new System.Windows.Forms.CheckBox();
             this.holidayCheck = new System.Windows.Forms.CheckBox();
             this.genderCombo = new System.Windows.Forms.ComboBox();
             this.genderLabel = new System.Windows.Forms.Label();
@@ -57,6 +56,11 @@ namespace Coursework
             this.saveButton = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.checkoutButton = new System.Windows.Forms.Button();
+            this.startTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.endTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.endTimeLabel = new System.Windows.Forms.Label();
+            this.phoneNumberLabel = new System.Windows.Forms.Label();
+            this.phoneNumberText = new System.Windows.Forms.MaskedTextBox();
             this.customerInfoPanel.SuspendLayout();
             this.ticketPanel.SuspendLayout();
             this.SuspendLayout();
@@ -76,9 +80,13 @@ namespace Coursework
             // 
             this.customerInfoPanel.BackColor = System.Drawing.Color.GhostWhite;
             this.customerInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.customerInfoPanel.Controls.Add(this.durationCombo);
-            this.customerInfoPanel.Controls.Add(this.durationLabel);
-            this.customerInfoPanel.Controls.Add(this.checkBox1);
+            this.customerInfoPanel.Controls.Add(this.phoneNumberText);
+            this.customerInfoPanel.Controls.Add(this.phoneNumberLabel);
+            this.customerInfoPanel.Controls.Add(this.endTimePicker);
+            this.customerInfoPanel.Controls.Add(this.endTimeLabel);
+            this.customerInfoPanel.Controls.Add(this.startTimePicker);
+            this.customerInfoPanel.Controls.Add(this.startTimeLabel);
+            this.customerInfoPanel.Controls.Add(this.groupCheck);
             this.customerInfoPanel.Controls.Add(this.holidayCheck);
             this.customerInfoPanel.Controls.Add(this.genderCombo);
             this.customerInfoPanel.Controls.Add(this.genderLabel);
@@ -88,46 +96,32 @@ namespace Coursework
             this.customerInfoPanel.Controls.Add(this.nameLabel);
             this.customerInfoPanel.Location = new System.Drawing.Point(10, 62);
             this.customerInfoPanel.Name = "customerInfoPanel";
-            this.customerInfoPanel.Size = new System.Drawing.Size(652, 146);
+            this.customerInfoPanel.Size = new System.Drawing.Size(652, 180);
             this.customerInfoPanel.TabIndex = 1;
             // 
-            // durationCombo
+            // startTimeLabel
             // 
-            this.durationCombo.FormattingEnabled = true;
-            this.durationCombo.Items.AddRange(new object[] {
-            "1 Hour",
-            "2 Hours",
-            "3 Hours",
-            "4 Hours",
-            "Whole Day"});
-            this.durationCombo.Location = new System.Drawing.Point(99, 91);
-            this.durationCombo.Name = "durationCombo";
-            this.durationCombo.Size = new System.Drawing.Size(117, 21);
-            this.durationCombo.TabIndex = 16;
-            this.durationCombo.Text = "--Select Duration--";
+            this.startTimeLabel.AutoSize = true;
+            this.startTimeLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.startTimeLabel.Location = new System.Drawing.Point(15, 80);
+            this.startTimeLabel.Name = "startTimeLabel";
+            this.startTimeLabel.Size = new System.Drawing.Size(74, 24);
+            this.startTimeLabel.TabIndex = 15;
+            this.startTimeLabel.Text = "Start Time";
             // 
-            // durationLabel
+            // groupCheck
             // 
-            this.durationLabel.AutoSize = true;
-            this.durationLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.durationLabel.Location = new System.Drawing.Point(15, 91);
-            this.durationLabel.Name = "durationLabel";
-            this.durationLabel.Size = new System.Drawing.Size(65, 24);
-            this.durationLabel.TabIndex = 15;
-            this.durationLabel.Text = "Duration";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.checkBox1.Location = new System.Drawing.Point(478, 87);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(111, 23);
-            this.checkBox1.TabIndex = 14;
-            this.checkBox1.Text = "Group Ticket";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.groupCheck.AutoSize = true;
+            this.groupCheck.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.groupCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.groupCheck.Location = new System.Drawing.Point(478, 77);
+            this.groupCheck.Name = "groupCheck";
+            this.groupCheck.Size = new System.Drawing.Size(111, 23);
+            this.groupCheck.TabIndex = 14;
+            this.groupCheck.Text = "Group Ticket";
+            this.groupCheck.UseVisualStyleBackColor = true;
+            this.groupCheck.CheckedChanged += new System.EventHandler(this.groupTicketChanged);
             // 
             // holidayCheck
             // 
@@ -135,7 +129,7 @@ namespace Coursework
             this.holidayCheck.Cursor = System.Windows.Forms.Cursors.Hand;
             this.holidayCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.holidayCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.holidayCheck.Location = new System.Drawing.Point(262, 87);
+            this.holidayCheck.Location = new System.Drawing.Point(262, 77);
             this.holidayCheck.Name = "holidayCheck";
             this.holidayCheck.Size = new System.Drawing.Size(139, 23);
             this.holidayCheck.TabIndex = 13;
@@ -169,7 +163,7 @@ namespace Coursework
             // 
             this.ageText.AllowDrop = true;
             this.ageText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ageText.Location = new System.Drawing.Point(321, 25);
+            this.ageText.Location = new System.Drawing.Point(311, 25);
             this.ageText.Name = "ageText";
             this.ageText.Size = new System.Drawing.Size(40, 20);
             this.ageText.TabIndex = 10;
@@ -179,7 +173,7 @@ namespace Coursework
             // 
             this.ageLabel.AutoSize = true;
             this.ageLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.ageLabel.Location = new System.Drawing.Point(273, 25);
+            this.ageLabel.Location = new System.Drawing.Point(258, 24);
             this.ageLabel.Name = "ageLabel";
             this.ageLabel.Size = new System.Drawing.Size(34, 24);
             this.ageLabel.TabIndex = 9;
@@ -189,7 +183,7 @@ namespace Coursework
             // 
             this.nameText.AllowDrop = true;
             this.nameText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nameText.Location = new System.Drawing.Point(76, 25);
+            this.nameText.Location = new System.Drawing.Point(96, 25);
             this.nameText.Name = "nameText";
             this.nameText.Size = new System.Drawing.Size(140, 20);
             this.nameText.TabIndex = 8;
@@ -217,7 +211,7 @@ namespace Coursework
             this.ticketPanel.Controls.Add(this.adultCountLabel);
             this.ticketPanel.Controls.Add(this.childCountLabel);
             this.ticketPanel.Controls.Add(this.ticketIdLabel);
-            this.ticketPanel.Location = new System.Drawing.Point(10, 228);
+            this.ticketPanel.Location = new System.Drawing.Point(10, 266);
             this.ticketPanel.Name = "ticketPanel";
             this.ticketPanel.Size = new System.Drawing.Size(249, 208);
             this.ticketPanel.TabIndex = 15;
@@ -314,22 +308,24 @@ namespace Coursework
             // groupListBox
             // 
             this.groupListBox.FormattingEnabled = true;
-            this.groupListBox.Location = new System.Drawing.Point(285, 224);
+            this.groupListBox.Location = new System.Drawing.Point(285, 262);
             this.groupListBox.Name = "groupListBox";
             this.groupListBox.Size = new System.Drawing.Size(166, 212);
             this.groupListBox.TabIndex = 16;
+            this.groupListBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.groupListKeyDown);
             // 
             // nextPersonButton
             // 
             this.nextPersonButton.BackColor = System.Drawing.Color.PaleGreen;
             this.nextPersonButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextPersonButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.nextPersonButton.Location = new System.Drawing.Point(524, 228);
+            this.nextPersonButton.Location = new System.Drawing.Point(524, 266);
             this.nextPersonButton.Name = "nextPersonButton";
             this.nextPersonButton.Size = new System.Drawing.Size(87, 36);
             this.nextPersonButton.TabIndex = 17;
             this.nextPersonButton.Text = "Next";
             this.nextPersonButton.UseVisualStyleBackColor = false;
+            this.nextPersonButton.Click += new System.EventHandler(this.nextPersonButton_Click);
             // 
             // saveButton
             // 
@@ -337,12 +333,13 @@ namespace Coursework
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.saveButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.saveButton.Location = new System.Drawing.Point(575, 385);
+            this.saveButton.Location = new System.Drawing.Point(575, 423);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(87, 36);
             this.saveButton.TabIndex = 18;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = false;
+            this.saveButton.Click += new System.EventHandler(this.saveButtonClicked);
             // 
             // Cancel
             // 
@@ -350,7 +347,7 @@ namespace Coursework
             this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Cancel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.Cancel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Cancel.Location = new System.Drawing.Point(474, 385);
+            this.Cancel.Location = new System.Drawing.Point(474, 423);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(87, 36);
             this.Cancel.TabIndex = 19;
@@ -362,13 +359,63 @@ namespace Coursework
             this.checkoutButton.BackColor = System.Drawing.Color.PaleTurquoise;
             this.checkoutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkoutButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.checkoutButton.Location = new System.Drawing.Point(524, 299);
+            this.checkoutButton.Location = new System.Drawing.Point(524, 337);
             this.checkoutButton.Name = "checkoutButton";
             this.checkoutButton.Size = new System.Drawing.Size(87, 36);
             this.checkoutButton.TabIndex = 20;
             this.checkoutButton.Text = "Checkout";
             this.checkoutButton.UseVisualStyleBackColor = false;
             this.checkoutButton.Click += new System.EventHandler(this.checkoutButton_Click);
+            // 
+            // startTimePicker
+            // 
+            this.startTimePicker.CustomFormat = "hh:mm tt";
+            this.startTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startTimePicker.Location = new System.Drawing.Point(96, 78);
+            this.startTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.startTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.startTimePicker.Name = "startTimePicker";
+            this.startTimePicker.Size = new System.Drawing.Size(102, 20);
+            this.startTimePicker.TabIndex = 16;
+            // 
+            // endTimePicker
+            // 
+            this.endTimePicker.CustomFormat = "hh:mm tt";
+            this.endTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.endTimePicker.Location = new System.Drawing.Point(339, 134);
+            this.endTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.endTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.endTimePicker.Name = "endTimePicker";
+            this.endTimePicker.Size = new System.Drawing.Size(102, 20);
+            this.endTimePicker.TabIndex = 18;
+            // 
+            // endTimeLabel
+            // 
+            this.endTimeLabel.AutoSize = true;
+            this.endTimeLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.endTimeLabel.Location = new System.Drawing.Point(258, 136);
+            this.endTimeLabel.Name = "endTimeLabel";
+            this.endTimeLabel.Size = new System.Drawing.Size(68, 24);
+            this.endTimeLabel.TabIndex = 17;
+            this.endTimeLabel.Text = "End Time";
+            // 
+            // phoneNumberLabel
+            // 
+            this.phoneNumberLabel.AutoSize = true;
+            this.phoneNumberLabel.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.phoneNumberLabel.Location = new System.Drawing.Point(15, 137);
+            this.phoneNumberLabel.Name = "phoneNumberLabel";
+            this.phoneNumberLabel.Size = new System.Drawing.Size(73, 24);
+            this.phoneNumberLabel.TabIndex = 19;
+            this.phoneNumberLabel.Text = "Phone no.";
+            // 
+            // phoneNumberText
+            // 
+            this.phoneNumberText.Location = new System.Drawing.Point(96, 139);
+            this.phoneNumberText.Mask = "0000000000";
+            this.phoneNumberText.Name = "phoneNumberText";
+            this.phoneNumberText.Size = new System.Drawing.Size(100, 20);
+            this.phoneNumberText.TabIndex = 20;
             // 
             // TicketForm
             // 
@@ -405,7 +452,7 @@ namespace Coursework
         private ComboBox genderCombo;
         private Label genderLabel;
         private CheckBox holidayCheck;
-        private CheckBox checkBox1;
+        private CheckBox groupCheck;
         private Panel ticketPanel;
         private ListBox groupListBox;
         private Label ticketIdLabel;
@@ -419,9 +466,13 @@ namespace Coursework
         private Label seniorCountLabel;
         private Label adultCountLabel;
         private Label childCountLabel;
-        private ComboBox durationCombo;
-        private Label durationLabel;
+        private Label startTimeLabel;
         private Button checkoutButton;
         private TextBox tickedIdText;
+        private DateTimePicker startTimePicker;
+        private MaskedTextBox phoneNumberText;
+        private Label phoneNumberLabel;
+        private DateTimePicker endTimePicker;
+        private Label endTimeLabel;
     }
 }
