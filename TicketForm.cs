@@ -39,6 +39,7 @@ namespace Coursework
             nameText.ResetText();
             phoneNumberText.ResetText();
             ageText.ResetText();
+            tickedIdText.ResetText();
 
             genderCombo.SelectedIndex = -1;
             genderCombo.Text = "--Select Gender--";
@@ -68,23 +69,73 @@ namespace Coursework
             Utils.currentForm = Constants.LOGIN_FORM;
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            Utils.validateDigitPressed(sender, e, false);
-        }
-
         private void checkoutButton_Click(object sender, EventArgs e)
         {
+            setInitState(true);
+            groupListBox.Items.Clear();
+            groupVisitors.Clear();
+
+            tickedIdText.ResetText();
             tickedIdText.Enabled = true;
+        }
+
+        private void setVisitorFields(Visitor mVisitor) {
+            nameText.Text = mVisitor.name;
+            ageText.Text = mVisitor.age.ToString();
+            genderCombo.Text = mVisitor.gender.ToString();
+            holidayCheck.Checked = mVisitor.receivedHolidayDiscount;
+            startTimePicker.Value = DateTime.Parse(mVisitor.startTime);
+
+            if (mVisitor.phoneNumber != Constants.NO_NUMBER)
+            {
+                phoneNumberText.Text = mVisitor.phoneNumber.ToString();
+            }
         }
 
         private void ticketKeyPressed(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == (char)13)
             {
-                tickedIdText.ResetText();
-                tickedIdText.Enabled = false;
-                ticketIdLabel.Focus();
+
+                int ticketId = int.Parse(tickedIdText.Text);
+
+                List<Visitor> selectedVisitors = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE).Where(v => v.ticketId == ticketId).ToList();
+                if (selectedVisitors.Count > 0)
+                {
+                    setInitState(false);
+                    groupListBox.Items.Clear();
+                    groupVisitors.Clear();
+
+                    tickedIdText.Enabled = false;
+                    ticketIdLabel.Focus();
+
+                    // TODO disable controls
+                    if (selectedVisitors.Count == 1)
+                    {
+                        Visitor mVisitor = selectedVisitors[0];
+
+                        setVisitorFields(mVisitor);
+                        // TODO disable end-time if it's been already set
+                    }
+                    else {
+                        groupVisitors = selectedVisitors;
+                        groupCheck.Checked = true;
+
+                        foreach (Visitor item in groupVisitors)
+                        {
+                            groupListBox.Items.Add(item.name);
+                        }
+
+                        setVisitorFields(groupVisitors[0]);
+                    }
+
+                }
+                else
+                {
+                    tickedIdText.ResetText();
+                    tickedIdText.Enabled = false;
+                    MessageBox.Show("No ticket found with id " + ticketId, "No Ticket!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
@@ -136,11 +187,11 @@ namespace Coursework
                 }
                 else
                 {
-                    MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Some of the fields are not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
-            {   
+            {
                 groupListBox.SelectedIndex = -1;
                 setGroupState();
             }
@@ -156,11 +207,10 @@ namespace Coursework
                 {
                     groupVisitors.RemoveAt(groupListBox.SelectedIndex);
                     groupListBox.Items.Remove(selectedItem);
+                    setGroupState();
                 }
             }
         }
-
-
 
         private void saveButtonClicked(object sender, EventArgs e)
         {
@@ -200,12 +250,13 @@ namespace Coursework
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                     Utils.setLastId(true, false);
 
-                    MessageBox.Show("Ticket saved! Your id is "+ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     setInitState(true);
+                    startTimePicker.Enabled = true;
                 }
                 else
                 {
-                    MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Some of the fields are not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -218,10 +269,11 @@ namespace Coursework
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                 }
 
-                Utils.setLastId(true,true);
+                Utils.setLastId(true, true);
 
                 MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 setInitState(true);
+                startTimePicker.Enabled = true;
                 groupListBox.Items.Clear();
             }
 
@@ -256,13 +308,47 @@ namespace Coursework
                 isValid = false;
             }
 
+            if (endTimePicker.Enabled)
+            {
+                // TODO check if the end date is before or after start date. 
+            }
+
 
             return isValid;
         }
 
         private void cancelButtonClicked(object sender, EventArgs e)
         {
-            setInitState(true);
+            var result = MessageBox.Show("Are you sure you want to cancel?", "Cancel", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.OK)
+            {
+                setInitState(true);
+                groupListBox.Items.Clear();
+                startTimePicker.Enabled = true;
+            }
+        }
+
+        private void ageTextKeyPressed(object sender, KeyEventArgs e)
+        {
+            Utils.validateDigitPressed(sender, e, false);
+        }
+
+        private void groupListIndexChanged(object sender, EventArgs e)
+        {
+            if (groupVisitors.Count > 0 || groupListBox.SelectedIndex != -1)
+            {
+                // The index changed listener is called also called when the item is deleted from listBox.
+                try
+                {
+                    setVisitorFields(groupVisitors[groupListBox.SelectedIndex]);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    System.Diagnostics.Debug.WriteLine("The index was changed to "+groupListBox.SelectedIndex);
+                }
+                
+            }
         }
     }
 }

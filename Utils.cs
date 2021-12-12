@@ -104,7 +104,7 @@ namespace Coursework
             }
 
             Identifiers mIdentifier = new Identifiers();
-            mIdentifier.ticketId = 1000000;
+            mIdentifier.ticketId = 100;
             mIdentifier.groupId = 0;
             return mIdentifier;
         }

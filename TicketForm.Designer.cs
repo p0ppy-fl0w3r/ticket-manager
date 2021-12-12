@@ -218,7 +218,7 @@ namespace Coursework
             this.ageText.Name = "ageText";
             this.ageText.Size = new System.Drawing.Size(40, 20);
             this.ageText.TabIndex = 10;
-            this.ageText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.ageText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ageTextKeyPressed);
             // 
             // ageLabel
             // 
@@ -363,6 +363,7 @@ namespace Coursework
             this.groupListBox.Name = "groupListBox";
             this.groupListBox.Size = new System.Drawing.Size(166, 212);
             this.groupListBox.TabIndex = 16;
+            this.groupListBox.SelectedIndexChanged += new System.EventHandler(this.groupListIndexChanged);
             this.groupListBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.groupListKeyDown);
             // 
             // nextPersonButton

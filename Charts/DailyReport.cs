@@ -18,6 +18,7 @@ namespace Coursework.Charts
         public DailyReport()
         {
             // TODO read the visitor in the report class and pass the values in constructors. 
+            // TODO sort the date values.
             InitializeComponent();
 
             ageRangeDict = new Dictionary<string, int>();
@@ -139,7 +140,6 @@ namespace Coursework.Charts
                 Age = n.Key,
                 Count = n.Value
             });
-
 
             dailyAgeChart.Series[0].XValueMember = "Age";
             dailyAgeChart.Series[0].YValueMembers = "Count";
