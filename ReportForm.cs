@@ -19,8 +19,8 @@ namespace Coursework
             InitializeComponent();
             initVisitorList();
 
-            // Show the daily report in the beginning.
-            Utils.navigate(new DailyReport(), chartPanel);
+            // TODO Show the daily report in the beginning.
+            Utils.navigate(new WeeklyReport(), chartPanel);
         }
 
         private void initVisitorList() {

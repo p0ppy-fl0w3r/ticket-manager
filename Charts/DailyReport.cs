@@ -26,7 +26,7 @@ namespace Coursework.Charts
 
             setDateComboItems();
 
-            setGroupChart();
+            setGroupChart(DateTime.Now.ToString(Constants.DATE_FORMAT));
         }
         private void radioCheckChanged(object sender, EventArgs e)
         {
@@ -38,15 +38,25 @@ namespace Coursework.Charts
                 {
                     setAgeChart(DateTime.Now.ToString(Constants.DATE_FORMAT));
                 }
-                else { 
-                    setAgeChart(dateCombo.SelectedItem.ToString()); 
+                else
+                {
+                    setAgeChart(dateCombo.SelectedItem.ToString());
                 }
-                
+
             }
             else
             {
                 dailyGroupChart.Visible = true;
                 dailyAgeChart.Visible = false;
+
+                if (dateCombo.SelectedItem == null)
+                {
+                    setGroupChart(DateTime.Now.ToString(Constants.DATE_FORMAT));
+                }
+                else
+                {
+                    setGroupChart(dateCombo.SelectedItem.ToString());
+                }
             }
         }
 
@@ -64,18 +74,22 @@ namespace Coursework.Charts
             return DateTime.Parse(visitor.startTime).ToString(Constants.DATE_FORMAT);
         }
 
-        private void setGroupChart() {
+        private void setGroupChart(String requiredDate)
+        {
             groupRangeDict.Clear();
-            groupRangeDict.Add("0-4",0);
-            groupRangeDict.Add("5-9",0);
-            groupRangeDict.Add("10-15",0);
-            groupRangeDict.Add("15+",0);
+            groupRangeDict.Add("0-4", 0);
+            groupRangeDict.Add("5-9", 0);
+            groupRangeDict.Add("10-15", 0);
+            groupRangeDict.Add("15+", 0);
 
-            var groupCount = Utils.visitorsList.Where(x => x.groupId != Constants.NO_GROUP).GroupBy(visitor => visitor.groupId).Select(
-                    groupedVisitor =>new { ID = groupedVisitor.Key, Count = groupedVisitor.Count() }
+            var groupCount = Utils.visitorsList.Where(v => getDateFormatted(v) == requiredDate)
+                .Where(x => x.groupId != Constants.NO_GROUP)
+                .GroupBy(visitor => visitor.groupId)
+                .Select(
+                    groupedVisitor => new { ID = groupedVisitor.Key, Count = groupedVisitor.Count() }
                 );
 
-            int singleVisitor = Utils.visitorsList.Count - groupCount.Count();
+            int singleVisitor = Utils.visitorsList.Where(v => getDateFormatted(v) == requiredDate).Where(x => x.groupId == Constants.NO_GROUP).Count();
             groupRangeDict["0-4"] = singleVisitor;
 
             foreach (var item in groupCount)
@@ -92,7 +106,8 @@ namespace Coursework.Charts
                 {
                     groupRangeDict["10-15"] = groupRangeDict["10-15"] + 1;
                 }
-                else {
+                else
+                {
                     groupRangeDict["15+"] = groupRangeDict["15+"] + 1;
                 }
             }
@@ -119,7 +134,7 @@ namespace Coursework.Charts
             ageRangeDict.Add("13-65", 0);
             ageRangeDict.Add("66+", 0);
 
-            foreach (Visitor visitor in Utils.visitorsList.Where(v => getDateFormatted(v) == requiredDate ))
+            foreach (Visitor visitor in Utils.visitorsList.Where(v => getDateFormatted(v) == requiredDate))
             {
                 if (visitor.age <= 12)
                 {
@@ -148,13 +163,16 @@ namespace Coursework.Charts
             dailyAgeChart.DataSource = grouped;
 
             // Since the chart is rendered only once, call the DataBind method to bind 'grouped' into the chart. 
-            dailyAgeChart.DataBind();   
+            dailyAgeChart.DataBind();
 
         }
 
         private void dateItemChanged(object sender, EventArgs e)
         {
+            // Since the charts are not recreated and are just invisible, set the data for both of the charts. 
             setAgeChart(dateCombo.SelectedItem.ToString());
+            setGroupChart(dateCombo.SelectedItem.ToString());
+
         }
     }
 }
