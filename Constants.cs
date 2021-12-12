@@ -23,5 +23,8 @@ namespace Coursework
         public const int NO_GROUP = -1;
         public const int NO_NUMBER = -1;
 
+        // Date Formats
+        public const string DATE_FORMAT = "yyyy-MM-dd";
+
     }
 }

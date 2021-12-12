@@ -15,6 +15,8 @@ namespace Coursework
     {
 
         public static string currentForm = Constants.LOGIN_FORM;
+        
+        public static List<Visitor> visitorsList = new List<Visitor>();
 
 
         /// <summary>

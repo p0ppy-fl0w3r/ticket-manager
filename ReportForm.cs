@@ -1,4 +1,5 @@
 ﻿using Coursework.Charts;
+using Coursework.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,14 @@ namespace Coursework
         public ReportForm()
         {
             InitializeComponent();
+            initVisitorList();
 
             // Show the daily report in the beginning.
             Utils.navigate(new DailyReport(), chartPanel);
+        }
+
+        private void initVisitorList() {
+            Utils.visitorsList = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE);
         }
 
         private void dailyReportButton_Click(object sender, EventArgs e)
