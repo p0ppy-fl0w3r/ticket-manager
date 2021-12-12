@@ -18,16 +18,49 @@ namespace Coursework
         {
             InitializeComponent();
 
-            setInitState();
+            setInitState(true);
 
         }
 
-        private void setInitState()
+        private void setInitState(bool setTime)
         {
             tickedIdText.Enabled = false;
             endTimeLabel.Visible = false;
             endTimePicker.Visible = false;
             nextPersonButton.Enabled = false;
+
+            groupCheck.Enabled = true;
+            holidayCheck.Enabled = true;
+            startTimeLabel.Enabled = true;
+
+            groupCheck.Checked = false;
+            holidayCheck.Checked = false;
+
+            nameText.ResetText();
+            phoneNumberText.ResetText();
+            ageText.ResetText();
+
+            genderCombo.SelectedIndex = -1;
+            genderCombo.Text = "--Select Gender--";
+
+            if (setTime)
+            {
+                startTimePicker.Value = DateTime.Now;
+            }
+
+        }
+
+        private void setGroupState()
+        {
+            bool isHoliday = holidayCheck.Checked;
+            setInitState(false);
+
+            groupCheck.Checked = true;
+            holidayCheck.Checked = isHoliday;
+
+            groupCheck.Enabled = false;
+            holidayCheck.Enabled = false;
+            startTimePicker.Enabled = false;
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -67,42 +100,49 @@ namespace Coursework
 
         private void nextPersonButton_Click(object sender, EventArgs e)
         {
-            if (validateFields())
+            if (groupListBox.SelectedItem == null)
             {
-                holidayCheck.Enabled = false;
-                groupCheck.Enabled = false;
-                startTimePicker.Enabled = false;
-
-                string name = nameText.Text;
-                string gender = genderCombo.SelectedItem.ToString();
-                int age = int.Parse(ageText.Text);
-                string startTime = startTimePicker.Value.ToString();
-
-                long phoneNumber;
-                if (phoneNumberText.Text.Trim().Length == 0)
+                if (validateFields())
                 {
-                    phoneNumber = 0;
+                    string name = nameText.Text;
+                    string gender = genderCombo.SelectedItem.ToString();
+                    int age = int.Parse(ageText.Text);
+                    string startTime = startTimePicker.Value.ToString();
+
+                    long phoneNumber;
+                    if (phoneNumberText.Text.Trim().Length == 0)
+                    {
+                        phoneNumber = Constants.NO_NUMBER;
+                    }
+                    else
+                    {
+                        phoneNumber = long.Parse(phoneNumberText.Text);
+                    }
+
+                    Visitor visitor = new Visitor();
+                    visitor.name = name;
+                    visitor.gender = gender;
+                    visitor.age = age;
+                    visitor.phoneNumber = phoneNumber;
+                    visitor.startTime = startTime;
+                    visitor.receivedHolidayDiscount = holidayCheck.Checked;
+
+                    groupVisitors.Add(visitor);
+
+                    groupListBox.SelectedIndex = -1;
+                    groupListBox.Items.Add(nameText.Text);
+
+                    setGroupState();
                 }
                 else
                 {
-                    phoneNumber = long.Parse(phoneNumberText.Text);
+                    MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-
-                Visitor visitor = new Visitor();
-                visitor.name = name;
-                visitor.gender = gender;
-                visitor.age = age;
-                visitor.phoneNumber = phoneNumber;
-                visitor.startTime = startTime;
-
-                groupVisitors.Add(visitor);
-
-                groupListBox.SelectedIndex = -1;
-                groupListBox.Items.Add(nameText.Text);
             }
             else
-            {
-                MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            {   
+                groupListBox.SelectedIndex = -1;
+                setGroupState();
             }
         }
 
@@ -124,13 +164,11 @@ namespace Coursework
 
         private void saveButtonClicked(object sender, EventArgs e)
         {
-            // TODO reset fields 
-
             Identifiers identifiers = Utils.getLastId();
             int groupId = identifiers.groupId;
             int ticketId = identifiers.ticketId;
 
-            if (!groupCheck.Checked)
+            if (!groupCheck.Checked || groupListBox.Items.Count == 0)
             {
                 if (validateFields())
                 {
@@ -157,8 +195,13 @@ namespace Coursework
                     visitor.phoneNumber = phoneNumber;
                     visitor.startTime = startTime;
 
+                    visitor.receivedHolidayDiscount = holidayCheck.Checked;
+
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
-                    Utils.setLastId(true, groupCheck.Checked);
+                    Utils.setLastId(true, false);
+
+                    MessageBox.Show("Ticket saved! Your id is "+ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    setInitState(true);
                 }
                 else
                 {
@@ -175,13 +218,19 @@ namespace Coursework
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                 }
 
-                Utils.setLastId(true, groupCheck.Checked);
+                Utils.setLastId(true,true);
+
+                MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                setInitState(true);
+                groupListBox.Items.Clear();
             }
 
         }
 
         private bool validateFields()
         {
+            // TODO add validation for opening and close time
+            // TODO add open and close time in admin panel
             bool isValid = true;
             if (nameText.Text.Length < 1)
             {
@@ -209,6 +258,11 @@ namespace Coursework
 
 
             return isValid;
+        }
+
+        private void cancelButtonClicked(object sender, EventArgs e)
+        {
+            setInitState(true);
         }
     }
 }

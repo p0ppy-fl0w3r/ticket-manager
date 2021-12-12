@@ -20,7 +20,7 @@ namespace Coursework.Models
         public int groupId { get; set; }
         public long phoneNumber { get; set; }
         public double checkoutPrice { get; set; }
-
+        public bool receivedHolidayDiscount { get; set; }
         public override string ToString() {
             return toJson();
         }

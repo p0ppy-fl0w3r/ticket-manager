@@ -404,6 +404,7 @@ namespace Coursework
             this.Cancel.TabIndex = 19;
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = false;
+            this.Cancel.Click += new System.EventHandler(this.cancelButtonClicked);
             // 
             // checkoutButton
             // 
