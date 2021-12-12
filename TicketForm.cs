@@ -36,6 +36,9 @@ namespace Coursework
             groupCheck.Checked = false;
             holidayCheck.Checked = false;
 
+            endTimeLabel.Visible = false;
+            endTimePicker.Visible = false;
+
             nameText.ResetText();
             phoneNumberText.ResetText();
             ageText.ResetText();
@@ -103,6 +106,10 @@ namespace Coursework
                 if (selectedVisitors.Count > 0)
                 {
                     setInitState(false);
+
+                    endTimeLabel.Visible = true;
+                    endTimePicker.Visible = true;
+
                     groupListBox.Items.Clear();
                     groupVisitors.Clear();
 
@@ -245,8 +252,15 @@ namespace Coursework
                     visitor.phoneNumber = phoneNumber;
                     visitor.startTime = startTime;
 
+                    if (endTimePicker.Enabled)
+                    {
+                        visitor.endTime = endTimePicker.Value.ToString();
+                        ticketId = int.Parse(tickedIdText.Text.ToString());
+                    }
+
                     visitor.receivedHolidayDiscount = holidayCheck.Checked;
 
+                    // TODO replace and rewrite the file.
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                     Utils.setLastId(true, false);
 
@@ -261,20 +275,42 @@ namespace Coursework
             }
             else
             {
+                if (endTimePicker.Enabled)
+                {
+                    string endTime = endTimePicker.Value.ToString();    
+                }
+
                 foreach (Visitor visitor in groupVisitors)
                 {
                     visitor.ticketId = ticketId;
                     visitor.groupId = groupId;
 
+                    if (endTimePicker.Enabled)
+                    {
+                        visitor.endTime = endTimePicker.Value.ToString();
+                    }
+                    else{
+                        visitor.ticketId = ticketId;
+                    }
+
+                    // TODO replace and rewrite the file. Currently it saves the ticket as a new entry.
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                 }
 
-                Utils.setLastId(true, true);
+                if (!endTimePicker.Enabled)
+                {
+                    Utils.setLastId(true, true);
+                    MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else {
+                    MessageBox.Show("Checked-out at: "+endTimePicker.Value.ToString("g"),"Checked out!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
-                MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 setInitState(true);
                 startTimePicker.Enabled = true;
                 groupListBox.Items.Clear();
+
+                // TODO add validation for end date here.
             }
 
         }
