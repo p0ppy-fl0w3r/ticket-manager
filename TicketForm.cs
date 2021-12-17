@@ -95,7 +95,8 @@ namespace Coursework
             }
         }
 
-        private void setFieldState(bool enabled) { 
+        private void setFieldState(bool enabled)
+        {
             nameText.Enabled = enabled;
             ageText.Enabled = enabled;
             genderCombo.Enabled = enabled;
@@ -103,7 +104,7 @@ namespace Coursework
             holidayCheck.Enabled = enabled;
             groupCheck.Enabled = enabled;
             phoneNumberText.Enabled = enabled;
-            endTimePicker.Enabled = enabled;    
+            endTimePicker.Enabled = enabled;
             saveButton.Enabled = enabled;
             checkoutButton.Enabled = enabled;
         }
@@ -131,16 +132,17 @@ namespace Coursework
                     ticketIdLabel.Focus();
 
                     setFieldState(false);
-                    
+
                     if (selectedVisitors.Count == 1)
                     {
-                       
+
                         Visitor mVisitor = selectedVisitors[0];
-                        
-                        if (mVisitor.endTime == null) { 
+
+                        if (mVisitor.endTime == null)
+                        {
                             // The visitor has not checked out. Enable end time and save
                             endTimePicker.Enabled = true;
-                            saveButton.Enabled=true;
+                            saveButton.Enabled = true;
                         }
 
                         setVisitorFields(mVisitor);
@@ -263,7 +265,7 @@ namespace Coursework
                     string gender = genderCombo.SelectedItem.ToString();
                     int age = int.Parse(ageText.Text);
                     string startTime = startTimePicker.Value.ToString();
-                    long phoneNumber = phoneNumberText.Text.Trim().Length == 0 ? 
+                    long phoneNumber = phoneNumberText.Text.Trim().Length == 0 ?
                         Constants.NO_NUMBER : long.Parse(phoneNumberText.Text);
 
                     Visitor visitor = new Visitor();
@@ -293,13 +295,13 @@ namespace Coursework
                         // DEBUG
                         List<Visitor> originalVisitorData = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE);
                         List<Visitor> selectedVisitorData = originalVisitorData.Where(x => x.ticketId == visitor.ticketId).ToList();
-                        selectedVisitorData.ForEach(x =>  x.endTime = visitor.endTime);
+                        selectedVisitorData.ForEach(x => x.endTime = visitor.endTime);
 
                         originalVisitorData.Union(selectedVisitorData);
 
-                        String data= "";
+                        String data = "";
 
-                        originalVisitorData.ForEach(v => data = data + v.toJson()+"\n");
+                        originalVisitorData.ForEach(v => data = data + v.toJson() + "\n");
 
                         Utils.writeToFile(data, Constants.VISITOR_FILE);
                     }
@@ -325,38 +327,34 @@ namespace Coursework
             }
             else
             {
-                // TODO add checkout for group
-                if (endTimePicker.Visible)
-                {
-                    string endTime = endTimePicker.Value.ToString();
-                }
-
-                foreach (Visitor visitor in groupVisitors)
-                {
-                    visitor.ticketId = ticketId;
-                    visitor.groupId = groupId;
-
-                    if (endTimePicker.Enabled)
-                    {
-                        visitor.endTime = endTimePicker.Value.ToString();
-                    }
-                    else
-                    {
-                        visitor.ticketId = ticketId;
-                    }
-
-                    // TODO replace and rewrite the file. Currently it saves the ticket as a new entry.
-                    Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
-                }
-
                 if (!endTimePicker.Visible)
                 {
+                    foreach (Visitor visitor in groupVisitors)
+                    {
+                        visitor.ticketId = ticketId;
+                        visitor.groupId = groupId;
+
+                        Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
+                    }
+
                     Utils.setLastId(true, true);
                     MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     MessageBox.Show("Checked-out at: " + endTimePicker.Value.ToString("g"), "Checked out!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    List<Visitor> originalVisitorData = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE);
+                    List<Visitor> selectedVisitorData = originalVisitorData.Where(x => x.ticketId == groupVisitors[0].ticketId).ToList();
+                    selectedVisitorData.ForEach(x => x.endTime = endTimePicker.Value.ToString());
+
+                    originalVisitorData.Union(selectedVisitorData);
+
+                    String data = "";
+
+                    originalVisitorData.ForEach(v => data = data + v.toJson() + "\n");
+
+                    Utils.writeToFile(data, Constants.VISITOR_FILE);
                 }
 
                 setInitState(true);
@@ -398,9 +396,17 @@ namespace Coursework
                 isValid = false;
             }
 
-            if (endTimePicker.Enabled)
+            if (endTimePicker.Visible)
             {
-                // TODO check if the end date is before or after start date. 
+                if (endTimePicker.Value.Subtract(startTimePicker.Value).Seconds < 0)
+                {
+                    isValid = false;
+                    Utils.animateTextBase(endTimeLabel);
+
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Show("End time can't be before start time", endTimePicker, new Point(endTimePicker.Size), 2000);
+
+                }
             }
 
 
