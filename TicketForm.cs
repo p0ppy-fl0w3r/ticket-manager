@@ -42,7 +42,6 @@ namespace Coursework
             nameText.ResetText();
             phoneNumberText.ResetText();
             ageText.ResetText();
-            tickedIdText.ResetText();
 
             genderCombo.SelectedIndex = -1;
             genderCombo.Text = "--Select Gender--";
@@ -82,7 +81,8 @@ namespace Coursework
             tickedIdText.Enabled = true;
         }
 
-        private void setVisitorFields(Visitor mVisitor) {
+        private void setVisitorFields(Visitor mVisitor)
+        {
             nameText.Text = mVisitor.name;
             ageText.Text = mVisitor.age.ToString();
             genderCombo.Text = mVisitor.gender.ToString();
@@ -95,11 +95,25 @@ namespace Coursework
             }
         }
 
+        private void setFieldState(bool enabled) { 
+            nameText.Enabled = enabled;
+            ageText.Enabled = enabled;
+            genderCombo.Enabled = enabled;
+            startTimePicker.Enabled = enabled;
+            holidayCheck.Enabled = enabled;
+            groupCheck.Enabled = enabled;
+            phoneNumberText.Enabled = enabled;
+            endTimePicker.Enabled = enabled;    
+            saveButton.Enabled = enabled;
+            checkoutButton.Enabled = enabled;
+        }
+
         private void ticketKeyPressed(object sender, KeyEventArgs e)
         {
+
+            // Check if the user pressed return 
             if (e.KeyValue == (char)13)
             {
-
                 int ticketId = int.Parse(tickedIdText.Text);
 
                 List<Visitor> selectedVisitors = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE).Where(v => v.ticketId == ticketId).ToList();
@@ -116,22 +130,38 @@ namespace Coursework
                     tickedIdText.Enabled = false;
                     ticketIdLabel.Focus();
 
-                    // TODO disable controls
+                    setFieldState(false);
+                    
                     if (selectedVisitors.Count == 1)
                     {
+                       
                         Visitor mVisitor = selectedVisitors[0];
+                        
+                        if (mVisitor.endTime == null) { 
+                            // The visitor has not checked out. Enable end time and save
+                            endTimePicker.Enabled = true;
+                            saveButton.Enabled=true;
+                        }
 
                         setVisitorFields(mVisitor);
-                        // TODO disable end-time if it's been already set
                     }
-                    else {
+                    else
+                    {
                         groupVisitors = selectedVisitors;
                         groupCheck.Checked = true;
 
+                        bool notCheckedOut = true;
                         foreach (Visitor item in groupVisitors)
                         {
+                            if (item.endTime != null)
+                            {
+                                notCheckedOut = false;
+                            }
                             groupListBox.Items.Add(item.name);
                         }
+
+                        endTimePicker.Enabled = notCheckedOut;
+                        saveButton.Enabled = notCheckedOut;
 
                         setVisitorFields(groupVisitors[0]);
                     }
@@ -233,18 +263,11 @@ namespace Coursework
                     string gender = genderCombo.SelectedItem.ToString();
                     int age = int.Parse(ageText.Text);
                     string startTime = startTimePicker.Value.ToString();
-                    int phoneNumber;
-                    if (phoneNumberText.Text.Trim().Length == 0)
-                    {
-                        phoneNumber = Constants.NO_NUMBER;
-                    }
-                    else
-                    {
-                        phoneNumber = int.Parse(phoneNumberText.Text);
-                    }
+                    long phoneNumber = phoneNumberText.Text.Trim().Length == 0 ? 
+                        Constants.NO_NUMBER : long.Parse(phoneNumberText.Text);
 
                     Visitor visitor = new Visitor();
-                    visitor.ticketId = ticketId;
+
                     visitor.groupId = Constants.NO_GROUP;
                     visitor.name = name;
                     visitor.gender = gender;
@@ -252,21 +275,48 @@ namespace Coursework
                     visitor.phoneNumber = phoneNumber;
                     visitor.startTime = startTime;
 
-                    if (endTimePicker.Enabled)
+                    if (endTimePicker.Visible)
                     {
+                        // TODO add price calculations here
+
                         visitor.endTime = endTimePicker.Value.ToString();
                         ticketId = int.Parse(tickedIdText.Text.ToString());
                     }
 
+                    visitor.ticketId = ticketId;
                     visitor.receivedHolidayDiscount = holidayCheck.Checked;
 
-                    // TODO replace and rewrite the file.
-                    Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
-                    Utils.setLastId(true, false);
+                    if (endTimePicker.Visible)
+                    {
+                        MessageBox.Show("Checked-out at: " + endTimePicker.Value.ToString("g"), "Checked out!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // DEBUG
+                        List<Visitor> originalVisitorData = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE);
+                        List<Visitor> selectedVisitorData = originalVisitorData.Where(x => x.ticketId == visitor.ticketId).ToList();
+                        selectedVisitorData.ForEach(x =>  x.endTime = visitor.endTime);
+
+                        originalVisitorData.Union(selectedVisitorData);
+
+                        String data= "";
+
+                        originalVisitorData.ForEach(v => data = data + v.toJson()+"\n");
+
+                        Utils.writeToFile(data, Constants.VISITOR_FILE);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Save the new visitor info on a file
+                        Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
+                        Utils.setLastId(true, false);
+                    }
+
                     setInitState(true);
+                    setFieldState(true);
+
                     startTimePicker.Enabled = true;
+                    tickedIdText.ResetText();
                 }
                 else
                 {
@@ -275,9 +325,10 @@ namespace Coursework
             }
             else
             {
-                if (endTimePicker.Enabled)
+                // TODO add checkout for group
+                if (endTimePicker.Visible)
                 {
-                    string endTime = endTimePicker.Value.ToString();    
+                    string endTime = endTimePicker.Value.ToString();
                 }
 
                 foreach (Visitor visitor in groupVisitors)
@@ -289,7 +340,8 @@ namespace Coursework
                     {
                         visitor.endTime = endTimePicker.Value.ToString();
                     }
-                    else{
+                    else
+                    {
                         visitor.ticketId = ticketId;
                     }
 
@@ -297,20 +349,22 @@ namespace Coursework
                     Utils.appendOnFile(visitor.toJson(), Constants.VISITOR_FILE);
                 }
 
-                if (!endTimePicker.Enabled)
+                if (!endTimePicker.Visible)
                 {
                     Utils.setLastId(true, true);
                     MessageBox.Show("Ticket saved! Your id is " + ticketId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else {
-                    MessageBox.Show("Checked-out at: "+endTimePicker.Value.ToString("g"),"Checked out!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                {
+                    MessageBox.Show("Checked-out at: " + endTimePicker.Value.ToString("g"), "Checked out!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 setInitState(true);
+                setFieldState(true);
+
                 startTimePicker.Enabled = true;
                 groupListBox.Items.Clear();
-
-                // TODO add validation for end date here.
+                tickedIdText.ResetText();
             }
 
         }
@@ -360,6 +414,10 @@ namespace Coursework
             if (result == DialogResult.OK)
             {
                 setInitState(true);
+                setFieldState(true);
+
+                tickedIdText.ResetText();
+
                 groupListBox.Items.Clear();
                 startTimePicker.Enabled = true;
             }
@@ -381,9 +439,9 @@ namespace Coursework
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    System.Diagnostics.Debug.WriteLine("The index was changed to "+groupListBox.SelectedIndex);
+                    System.Diagnostics.Debug.WriteLine("The index was changed to " + groupListBox.SelectedIndex);
                 }
-                
+
             }
         }
     }

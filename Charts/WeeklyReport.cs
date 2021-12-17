@@ -20,6 +20,7 @@ namespace Coursework.Charts
             // Get the first and the last date
             List<Visitor> sortedVisitors = Utils.visitorsList.OrderBy(v => DateTime.Parse(v.startTime)).ToList();
 
+            // TODO add empty value/null check
             DateTime firstDate = DateTime.Parse(sortedVisitors[0].startTime);
             DateTime lastDate = DateTime.Parse(sortedVisitors.Last().startTime);
 
