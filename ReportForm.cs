@@ -17,10 +17,11 @@ namespace Coursework
         public ReportForm()
         {
             InitializeComponent();
+
+            // TODO add null and empty value checks on charts
             initVisitorList();
 
-            // TODO Show the daily report in the beginning.
-            Utils.navigate(new WeeklyReport(), chartPanel);
+            Utils.navigate(new DailyReport(), chartPanel);
         }
 
         private void initVisitorList() {
