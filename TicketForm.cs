@@ -384,6 +384,12 @@ namespace Coursework
                 isValid = false;
             }
 
+            if (int.Parse(ageText.Text) > 150)
+            {
+                Utils.animateTextBase(ageText);
+                isValid = false;
+            }
+
             if (phoneNumberText.Text.Trim().Length > 0 && phoneNumberText.Text.Trim().Length < 9)
             {
                 Utils.animateTextBase(phoneNumberText);
