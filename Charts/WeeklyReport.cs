@@ -13,6 +13,7 @@ namespace Coursework.Charts
 {
     public partial class WeeklyReport : Form
     {
+        Dictionary<string, List<Visitor>> weekVisitors;
         public WeeklyReport()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace Coursework.Charts
         }
 
         private void initData() {
-            // TODO make the chart and table responsive to the drop-down. 
+
             // Get the first and the last date
             List<Visitor> sortedVisitors = Utils.visitorsList.OrderBy(v => DateTime.Parse(v.startTime)).ToList();
 
@@ -56,7 +57,7 @@ namespace Coursework.Charts
                 }
 
                 // Contains the range of week and visitors who visited in that week 
-                Dictionary<string, List<Visitor>> weekVisitors = new Dictionary<string, List<Visitor>>();
+                weekVisitors = new Dictionary<string, List<Visitor>>();
                 foreach (DateTime[] dateTime in dateTimes)
                 {
                     List<Visitor> visitors = new List<Visitor>();
@@ -69,46 +70,20 @@ namespace Coursework.Charts
                             visitors.Add(v);
                         }
                     }
-                    // The weeks have at least 1 visitors are relevant, others can be discarded.
+                    // The weeks that have at least 1 visitors are relevant, others can be discarded.
                     if (visitors.Count > 0)
                     {
                         weekVisitors.Add(dateName, visitors);
                     }
                 }
 
+                // Set the ranges of the weeks as the items in drop-down list. 
                 weekCombo.Items.Clear();
                 weekCombo.DataSource = weekVisitors.Keys.ToList();
 
-                foreach (KeyValuePair<string, List<Visitor>> item in weekVisitors)
-                {
-                    System.Diagnostics.Debug.WriteLine(item.Key +" has "+item.Value.Count.ToString());
-                }
-                
 
-                // Show the data of the latest week
-                var chartData = weekVisitors[weekVisitors.Keys.Last()].GroupBy(v => DateTime.Parse(v.startTime).DayOfWeek.ToString().Substring(0, 2)).Select(x => new
-                {
-                    WeekDay = x.Key,
-                    Count = x.Count(),
-                });
-
-                var tableData = weekVisitors[weekVisitors.Keys.Last()].GroupBy(v => (int)DateTime.Parse(v.startTime).DayOfWeek).Select(x => new
-                {
-                    WeekDay = x.Key,
-                    Count = x.Count(),
-                });
-
-                weeklyDataChart.Series[0].XValueMember = "WeekDay";
-                weeklyDataChart.Series[0].YValueMembers = "Count";
-
-                weeklyDataChart.DataSource = chartData;
-
-                foreach (var item in tableData)
-                {
-                    // TODO add 0 to empty values
-                    weeklyDataTable.Controls.Add(new Label() { Text = item.Count.ToString() }, 1, item.WeekDay + 1);
-
-                }
+                // Show the data of the latest week in chart and table.
+                weekCombo.SelectedIndex = weekVisitors.Count-1;
             }
         }
         private void initTable()
@@ -118,15 +93,54 @@ namespace Coursework.Charts
             weeklyDataTable.Controls.Add(new Label() { Text = "Number of Visitors" });
             weeklyDataTable.Controls.Add(new Label() { Text = "Total Income" });
 
-            // Rows
-            weeklyDataTable.Controls.Add(new Label() { Text = "Sunday" }, 0, 1);
-            weeklyDataTable.Controls.Add(new Label() { Text = "Monday" }, 0, 2);
-            weeklyDataTable.Controls.Add(new Label() { Text = "Tuesday" }, 0, 3);
-            weeklyDataTable.Controls.Add(new Label() { Text = "Wednesday" }, 0, 4);
-            weeklyDataTable.Controls.Add(new Label() { Text = "Thursday" }, 0, 5);
-            weeklyDataTable.Controls.Add(new Label() { Text = "Friday" }, 0, 6);
-            weeklyDataTable.Controls.Add(new Label() { Text = "Saturday" }, 0, 7);
+        }
 
+        private void weekValueChanged(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("The value was changed to "+ weekCombo.SelectedItem.ToString());
+
+            setTableData(weekCombo.SelectedItem.ToString());
+            setChartData(weekCombo.SelectedItem.ToString());
+        }
+
+        private void setTableData(string dateValue) {
+
+            // TODO add income.
+            var tableData = weekVisitors[dateValue].GroupBy(v => (int)DateTime.Parse(v.startTime).DayOfWeek).Select(x => new
+            {
+                WeekDay = x.Key,
+                Count = x.Count(),
+            });
+
+            weeklyDataTable.Controls.Clear();
+            initTable();
+            for (int i = 0; i < 7; i++)
+            {
+                weeklyDataTable.Controls.Add(new Label() { Text = ((DayOfWeek)i).ToString() }, 0,  1+i);
+
+                int count = 0;
+                // Set the count to number of visitors in that particular day of the week.
+                var visitorData = tableData.Where(x => x.WeekDay == (i)).ElementAtOrDefault(0);
+                if (visitorData != null)
+                {
+                    count  = visitorData.Count;
+                }
+                weeklyDataTable.Controls.Add(new Label() { Text = count.ToString() }, 1, i + 1);
+            }
+        }
+
+        private void setChartData(string dateValue) {
+            var chartData = weekVisitors[dateValue].GroupBy(v => DateTime.Parse(v.startTime).DayOfWeek.ToString().Substring(0, 2)).Select(x => new
+            {
+                WeekDay = x.Key,
+                Count = x.Count(),
+            });
+
+            weeklyDataChart.Series[0].XValueMember = "WeekDay";
+            weeklyDataChart.Series[0].YValueMembers = "Count";
+
+            weeklyDataChart.DataSource = chartData;
+            weeklyDataChart.DataBind();
         }
     }
 }
