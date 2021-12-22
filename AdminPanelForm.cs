@@ -54,17 +54,17 @@ namespace Coursework
 
                 adultOneText.Text = mTicketPrice.hourPrice.ToString();
                 adultTwoText.Text = mTicketPrice.twoHourPrice.ToString();
-                adultThreeText.Text = mTicketPrice.threeHourPrice.ToString();
-                adultFourText.Text = mTicketPrice.fourHourPrice.ToString();
+                adultThreeText.Text =mTicketPrice.threeHourPrice.ToString();
+                adultFourText.Text =mTicketPrice.fourHourPrice.ToString();
                 adultDayText.Text = mTicketPrice.dayPrice.ToString();
 
-                holidayDisText.Text = mTicketPrice.holidayDiscount.ToString();
-                weekendDisText.Text = mTicketPrice.weekendDiscount.ToString();
-                seniorDisText.Text = mTicketPrice.seniorDiscount.ToString();
-                childDisText.Text = mTicketPrice.childDiscount.ToString();
-                groupFiveText.Text = mTicketPrice.groupFiveDiscount.ToString();
-                groupTenText.Text = mTicketPrice.groupTenDiscount.ToString();
-                groupMoreText.Text = mTicketPrice.groupFifteenDiscount.ToString();
+                holidayDisText.Text = Utils.properDoubleString(mTicketPrice.holidayDiscount);
+                weekendDisText.Text = Utils.properDoubleString(mTicketPrice.weekendDiscount);
+                seniorDisText.Text = Utils.properDoubleString(mTicketPrice.seniorDiscount);
+                childDisText.Text = Utils.properDoubleString(mTicketPrice.childDiscount);
+                groupFiveText.Text = Utils.properDoubleString(mTicketPrice.groupFiveDiscount);
+                groupTenText.Text = Utils.properDoubleString(mTicketPrice.groupTenDiscount);
+                groupMoreText.Text = Utils.properDoubleString(mTicketPrice.groupFifteenDiscount);
             }
         }
 

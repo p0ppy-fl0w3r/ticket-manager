@@ -180,5 +180,15 @@ namespace Coursework
             return dateTime.DayOfWeek == DayOfWeek.Sunday || dateTime.DayOfWeek == DayOfWeek.Saturday;
         }
 
+        /// <summary>
+        /// Formats the decimal number less than 10 to have a preceding '0'
+        /// and only one digit after decimal.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static string properDoubleString(double number){
+            return string.Format("{0:00.0}", number);
+        }
+
     }
 }
