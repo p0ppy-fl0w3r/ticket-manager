@@ -21,6 +21,7 @@ namespace Coursework.Charts
         }
 
         private void initData() {
+            // TODO make the chart and table responsive to the drop-down. 
             // Get the first and the last date
             List<Visitor> sortedVisitors = Utils.visitorsList.OrderBy(v => DateTime.Parse(v.startTime)).ToList();
 
@@ -43,23 +44,23 @@ namespace Coursework.Charts
                 int numberOfWeeks = lastDate.Subtract(firstDate).Days / 7;
 
                 List<DateTime[]> dateTimes = new List<DateTime[]>();
-                Dictionary<String, int> weekCount = new Dictionary<String, int>();
+                Dictionary<String, int> weekCount = new Dictionary<string, int>();
 
                 // Include the entirety of the last week as well.
                 for (int i = 0; i < numberOfWeeks + 1; i++)
                 {
                     DateTime[] mDate = { firstDate.AddDays(i * 7), firstDate.AddDays((i + 1) * 7) };
-                    String dateName = mDate[0].ToString("d") + " to " + mDate[1].ToString("d");
+                    string dateName = mDate[0].ToString("d") + " to " + mDate[1].ToString("d");
                     dateTimes.Add(mDate);
                     weekCount.Add(dateName, 0);
                 }
 
                 // Contains the range of week and visitors who visited in that week 
-                Dictionary<String, List<Visitor>> weekVisitors = new Dictionary<String, List<Visitor>>();
+                Dictionary<string, List<Visitor>> weekVisitors = new Dictionary<string, List<Visitor>>();
                 foreach (DateTime[] dateTime in dateTimes)
                 {
                     List<Visitor> visitors = new List<Visitor>();
-                    String dateName = dateTime[0].ToString("d") + " to " + dateTime[1].ToString("d");
+                    string dateName = dateTime[0].ToString("d") + " to " + dateTime[1].ToString("d");
                     foreach (Visitor v in sortedVisitors)
                     {
                         if (DateTime.Parse(v.startTime) >= dateTime[0] && DateTime.Parse(v.startTime) < dateTime[1])
@@ -68,11 +69,21 @@ namespace Coursework.Charts
                             visitors.Add(v);
                         }
                     }
-                    weekVisitors.Add(dateName, visitors);
+                    // The weeks have at least 1 visitors are relevant, others can be discarded.
+                    if (visitors.Count > 0)
+                    {
+                        weekVisitors.Add(dateName, visitors);
+                    }
                 }
 
                 weekCombo.Items.Clear();
-                weekCombo.DataSource = weekCount.Keys.ToList();
+                weekCombo.DataSource = weekVisitors.Keys.ToList();
+
+                foreach (KeyValuePair<string, List<Visitor>> item in weekVisitors)
+                {
+                    System.Diagnostics.Debug.WriteLine(item.Key +" has "+item.Value.Count.ToString());
+                }
+                
 
                 // Show the data of the latest week
                 var chartData = weekVisitors[weekVisitors.Keys.Last()].GroupBy(v => DateTime.Parse(v.startTime).DayOfWeek.ToString().Substring(0, 2)).Select(x => new
