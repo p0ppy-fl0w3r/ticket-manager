@@ -13,6 +13,9 @@ namespace Coursework.Charts
 {
     public partial class WeeklyReport : Form
     {
+
+        Font boldFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
+
         Dictionary<string, List<Visitor>> weekVisitors;
         public WeeklyReport()
         {
@@ -21,8 +24,9 @@ namespace Coursework.Charts
             initData();
         }
 
-        private void initData() {
-
+        private void initData()
+        {
+            // TODO add sorting
             // Get the first and the last date
             List<Visitor> sortedVisitors = Utils.visitorsList.OrderBy(v => DateTime.Parse(v.startTime)).ToList();
 
@@ -83,53 +87,68 @@ namespace Coursework.Charts
 
 
                 // Show the data of the latest week in chart and table.
-                weekCombo.SelectedIndex = weekVisitors.Count-1;
+                weekCombo.SelectedIndex = weekVisitors.Count - 1;
             }
         }
         private void initTable()
         {
             // Columns
-            weeklyDataTable.Controls.Add(new Label() { Text = "Day of the week." });
-            weeklyDataTable.Controls.Add(new Label() { Text = "Number of Visitors" });
-            weeklyDataTable.Controls.Add(new Label() { Text = "Total Income" });
+            weeklyDataTable.Controls.Add(new Label() { Text = "Day of the week", Font = boldFont, AutoSize = true });
+            weeklyDataTable.Controls.Add(new Label() { Text = "Number of Visitors", Font = boldFont, AutoSize = true });
+            weeklyDataTable.Controls.Add(new Label() { Text = "Total Income", Font = boldFont, AutoSize = true });
 
         }
 
         private void weekValueChanged(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("The value was changed to "+ weekCombo.SelectedItem.ToString());
+            System.Diagnostics.Debug.WriteLine("The value was changed to " + weekCombo.SelectedItem.ToString());
 
             setTableData(weekCombo.SelectedItem.ToString());
             setChartData(weekCombo.SelectedItem.ToString());
         }
 
-        private void setTableData(string dateValue) {
-
-            // TODO add income.
+        private void setTableData(string dateValue)
+        {
             var tableData = weekVisitors[dateValue].GroupBy(v => (int)DateTime.Parse(v.startTime).DayOfWeek).Select(x => new
             {
                 WeekDay = x.Key,
                 Count = x.Count(),
+                Income = x.Sum(v => v.checkoutPrice)
             });
 
             weeklyDataTable.Controls.Clear();
             initTable();
+
+            int totalVisitor = 0;
+            double totalIncome = 0;
             for (int i = 0; i < 7; i++)
             {
-                weeklyDataTable.Controls.Add(new Label() { Text = ((DayOfWeek)i).ToString() }, 0,  1+i);
+                weeklyDataTable.Controls.Add(new Label() { Text = ((DayOfWeek)i).ToString() }, 0, 1 + i);
 
                 int count = 0;
+                double income = 0.0;
                 // Set the count to number of visitors in that particular day of the week.
                 var visitorData = tableData.Where(x => x.WeekDay == (i)).ElementAtOrDefault(0);
                 if (visitorData != null)
                 {
-                    count  = visitorData.Count;
+                    count = visitorData.Count;
+                    income = visitorData.Income;
                 }
-                weeklyDataTable.Controls.Add(new Label() { Text = count.ToString() }, 1, i + 1);
+                totalVisitor += count;
+                totalIncome += income;
+
+                weeklyDataTable.Controls.Add(new Label() { Text = count.ToString(), AutoSize = true }, 1, i + 1);
+                weeklyDataTable.Controls.Add(new Label() { Text = income.ToString(), AutoSize = true }, 2, i + 1);
             }
+
+
+            weeklyDataTable.Controls.Add(new Label() { Text = "Grand Total: ", Font = boldFont, AutoSize = true }, 0, 8);
+            weeklyDataTable.Controls.Add(new Label() { Text = totalVisitor.ToString(), Font = boldFont, AutoSize = true }, 1, 8);
+            weeklyDataTable.Controls.Add(new Label() { Text = totalIncome.ToString(), Font = boldFont, AutoSize = true }, 2, 8);
         }
 
-        private void setChartData(string dateValue) {
+        private void setChartData(string dateValue)
+        {
             var chartData = weekVisitors[dateValue].GroupBy(v => DateTime.Parse(v.startTime).DayOfWeek.ToString().Substring(0, 2)).Select(x => new
             {
                 WeekDay = x.Key,
@@ -141,6 +160,13 @@ namespace Coursework.Charts
 
             weeklyDataChart.DataSource = chartData;
             weeklyDataChart.DataBind();
+        }
+
+        private void sortIndexChanged(object sender, EventArgs e)
+        {
+            // TODO change chart series name
+            // TODO sort the table
+            // TODO see coursework guidelines no.3(page 4)
         }
     }
 }
