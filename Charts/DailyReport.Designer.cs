@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dailyAgeChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dailyGroupChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ageRadioButton = new System.Windows.Forms.RadioButton();
@@ -41,6 +41,7 @@
             this.selectionGroup = new System.Windows.Forms.GroupBox();
             this.dateCombo = new System.Windows.Forms.ComboBox();
             this.dateLabel = new System.Windows.Forms.Label();
+            this.reportTable = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dailyAgeChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dailyGroupChart)).BeginInit();
             this.selectionGroup.SuspendLayout();
@@ -49,40 +50,40 @@
             // dailyAgeChart
             // 
             this.dailyAgeChart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.Name = "ChartArea1";
-            this.dailyAgeChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.dailyAgeChart.Legends.Add(legend1);
+            chartArea11.AxisX.MajorGrid.Enabled = false;
+            chartArea11.AxisY.MajorGrid.Enabled = false;
+            chartArea11.Name = "ChartArea1";
+            this.dailyAgeChart.ChartAreas.Add(chartArea11);
+            legend11.Name = "Legend1";
+            this.dailyAgeChart.Legends.Add(legend11);
             this.dailyAgeChart.Location = new System.Drawing.Point(12, 74);
             this.dailyAgeChart.Name = "dailyAgeChart";
             this.dailyAgeChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Age Group";
-            this.dailyAgeChart.Series.Add(series1);
-            this.dailyAgeChart.Size = new System.Drawing.Size(420, 400);
+            series11.ChartArea = "ChartArea1";
+            series11.Legend = "Legend1";
+            series11.Name = "Age Group";
+            this.dailyAgeChart.Series.Add(series11);
+            this.dailyAgeChart.Size = new System.Drawing.Size(420, 182);
             this.dailyAgeChart.TabIndex = 0;
             this.dailyAgeChart.Text = "chart1";
             // 
             // dailyGroupChart
             // 
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.dailyGroupChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.dailyGroupChart.Legends.Add(legend2);
+            chartArea12.AxisX.MajorGrid.Enabled = false;
+            chartArea12.AxisY.MajorGrid.Enabled = false;
+            chartArea12.Name = "ChartArea1";
+            this.dailyGroupChart.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.dailyGroupChart.Legends.Add(legend12);
             this.dailyGroupChart.Location = new System.Drawing.Point(12, 74);
             this.dailyGroupChart.Name = "dailyGroupChart";
             this.dailyGroupChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series2.ChartArea = "ChartArea1";
-            series2.IsValueShownAsLabel = true;
-            series2.Legend = "Legend1";
-            series2.Name = "Group";
-            this.dailyGroupChart.Series.Add(series2);
-            this.dailyGroupChart.Size = new System.Drawing.Size(420, 400);
+            series12.ChartArea = "ChartArea1";
+            series12.IsValueShownAsLabel = true;
+            series12.Legend = "Legend1";
+            series12.Name = "Group";
+            this.dailyGroupChart.Series.Add(series12);
+            this.dailyGroupChart.Size = new System.Drawing.Size(420, 182);
             this.dailyGroupChart.TabIndex = 1;
             // 
             // ageRadioButton
@@ -137,11 +138,32 @@
             this.dateLabel.TabIndex = 6;
             this.dateLabel.Text = "Date";
             // 
+            // reportTable
+            // 
+            this.reportTable.AutoSize = true;
+            this.reportTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.reportTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.reportTable.ColumnCount = 2;
+            this.reportTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57.91506F));
+            this.reportTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
+            this.reportTable.Location = new System.Drawing.Point(12, 286);
+            this.reportTable.Name = "reportTable";
+            this.reportTable.RowCount = 6;
+            this.reportTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.reportTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.reportTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.reportTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.reportTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.reportTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.reportTable.Size = new System.Drawing.Size(90, 110);
+            this.reportTable.TabIndex = 7;
+            // 
             // DailyReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 486);
+            this.Controls.Add(this.reportTable);
             this.Controls.Add(this.dateLabel);
             this.Controls.Add(this.dateCombo);
             this.Controls.Add(this.selectionGroup);
@@ -168,5 +190,6 @@
         private System.Windows.Forms.GroupBox selectionGroup;
         private System.Windows.Forms.ComboBox dateCombo;
         private System.Windows.Forms.Label dateLabel;
+        private System.Windows.Forms.TableLayoutPanel reportTable;
     }
 }

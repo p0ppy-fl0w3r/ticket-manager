@@ -13,8 +13,11 @@ namespace Coursework.Charts
 {
     public partial class DailyReport : Form
     {
-        private Dictionary<String, int> ageRangeDict;
-        private Dictionary<String, int> groupRangeDict;
+
+        private Font boldFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold);
+
+        private Dictionary<string, int> ageRangeDict;
+        private Dictionary<string, int> groupRangeDict;
         public DailyReport()
         {
             // TODO read the visitor in the report class and pass the values in constructors. 
@@ -26,7 +29,7 @@ namespace Coursework.Charts
 
             setDateComboItems();
 
-            setGroupChart(DateTime.Now.ToString(Constants.DATE_FORMAT));
+            setGroupData(DateTime.Now.ToString(Constants.DATE_FORMAT));
         }
         private void radioCheckChanged(object sender, EventArgs e)
         {
@@ -36,11 +39,11 @@ namespace Coursework.Charts
                 dailyAgeChart.Visible = true;
                 if (dateCombo.SelectedItem == null)
                 {
-                    setAgeChart(DateTime.Now.ToString(Constants.DATE_FORMAT));
+                    setAgeData(DateTime.Now.ToString(Constants.DATE_FORMAT));
                 }
                 else
                 {
-                    setAgeChart(dateCombo.SelectedItem.ToString());
+                    setAgeData(dateCombo.SelectedItem.ToString());
                 }
 
             }
@@ -51,11 +54,11 @@ namespace Coursework.Charts
 
                 if (dateCombo.SelectedItem == null)
                 {
-                    setGroupChart(DateTime.Now.ToString(Constants.DATE_FORMAT));
+                    setGroupData(DateTime.Now.ToString(Constants.DATE_FORMAT));
                 }
                 else
                 {
-                    setGroupChart(dateCombo.SelectedItem.ToString());
+                    setGroupData(dateCombo.SelectedItem.ToString());
                 }
             }
         }
@@ -74,7 +77,7 @@ namespace Coursework.Charts
             return DateTime.Parse(visitor.startTime).ToString(Constants.DATE_FORMAT);
         }
 
-        private void setGroupChart(String requiredDate)
+        private void setGroupData(String requiredDate)
         {
             groupRangeDict.Clear();
             groupRangeDict.Add("0-4", 0);
@@ -118,6 +121,28 @@ namespace Coursework.Charts
                 Count = n.Value
             });
 
+
+            reportTable.Controls.Clear();
+            reportTable.RowCount = 6;
+
+            reportTable.Controls.Add(new Label() { Text = "Visitor Group", AutoSize = true, Font = boldFont }, 0, 0);
+            reportTable.Controls.Add(new Label() { Text = "Number of Visitors", AutoSize = true, Font = boldFont }, 1, 0);
+
+            int rowNum = 1;
+            int count = 0;
+            foreach (string visitorGroup in groupRangeDict.Keys)
+            {
+                reportTable.Controls.Add(new Label() { Text = visitorGroup }, 0, rowNum);
+                reportTable.Controls.Add(new Label() { Text = groupRangeDict[visitorGroup].ToString() }, 1, rowNum);
+
+                count += groupRangeDict[visitorGroup];
+
+                rowNum++;
+            }
+
+            reportTable.Controls.Add(new Label() { Text = "Grand Total: ", AutoSize = true, Font = boldFont }, 0, 5);
+            reportTable.Controls.Add(new Label() { Text = count.ToString(), AutoSize = true, Font = boldFont }, 1, 5);
+
             dailyGroupChart.Series[0].XValueMember = "Group";
             dailyGroupChart.Series[0].YValueMembers = "Count";
 
@@ -127,7 +152,7 @@ namespace Coursework.Charts
             dailyGroupChart.DataBind();
         }
 
-        private void setAgeChart(String requiredDate)
+        private void setAgeData(String requiredDate)
         {
             ageRangeDict.Clear();
             ageRangeDict.Add("0-12", 0);
@@ -156,9 +181,33 @@ namespace Coursework.Charts
                 Count = n.Value
             });
 
+            
+            reportTable.Controls.Clear();
+            reportTable.RowCount = 5;
+
+            reportTable.Controls.Add(new Label() { Text = "Age Group", AutoSize = true , Font = boldFont}, 0, 0);
+            reportTable.Controls.Add(new Label() { Text = "Number of Visitors", AutoSize = true,Font = boldFont }, 1, 0);
+
+            int rowNum = 1;
+            int count = 0;
+            foreach (string ageGroup in ageRangeDict.Keys)
+            {
+                reportTable.Controls.Add(new Label() { Text = ageGroup },0, rowNum);
+                reportTable.Controls.Add(new Label() { Text = ageRangeDict[ageGroup].ToString() },1, rowNum);
+
+                count += ageRangeDict[ageGroup];
+
+                rowNum++;
+            }
+
+            reportTable.Controls.Add(new Label() { Text = "Grand Total: ", AutoSize = true, Font = boldFont }, 0, 4);
+            reportTable.Controls.Add(new Label() { Text = count.ToString(), AutoSize = true, Font = boldFont }, 1, 4);
+
             dailyAgeChart.Series[0].XValueMember = "Age";
             dailyAgeChart.Series[0].YValueMembers = "Count";
             dailyAgeChart.Series[0].IsValueShownAsLabel = true;
+
+            
 
             dailyAgeChart.DataSource = grouped;
 
@@ -169,9 +218,13 @@ namespace Coursework.Charts
 
         private void dateItemChanged(object sender, EventArgs e)
         {
-            // Since the charts are not recreated and are just invisible, set the data for both of the charts. 
-            setAgeChart(dateCombo.SelectedItem.ToString());
-            setGroupChart(dateCombo.SelectedItem.ToString());
+            if (ageRadioButton.Checked)
+            {
+                setAgeData(dateCombo.SelectedItem.ToString());
+            }
+            else {
+                setGroupData(dateCombo.SelectedItem.ToString());
+            }
 
         }
     }
