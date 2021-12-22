@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.weeklyDataChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.weeklyDataTable = new System.Windows.Forms.TableLayoutPanel();
             this.sortCombo = new System.Windows.Forms.ComboBox();
@@ -42,19 +42,19 @@
             // 
             // weeklyDataChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.weeklyDataChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.weeklyDataChart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.weeklyDataChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.weeklyDataChart.Legends.Add(legend1);
             this.weeklyDataChart.Location = new System.Drawing.Point(12, 12);
             this.weeklyDataChart.Name = "weeklyDataChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.weeklyDataChart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "No. Visitors";
+            this.weeklyDataChart.Series.Add(series1);
             this.weeklyDataChart.Size = new System.Drawing.Size(420, 224);
             this.weeklyDataChart.TabIndex = 0;
-            this.weeklyDataChart.Text = "chart1";
+            this.weeklyDataChart.Text = "Weekly Report Chart";
             // 
             // weeklyDataTable
             // 
@@ -62,7 +62,7 @@
             this.weeklyDataTable.ColumnCount = 3;
             this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.49512F));
             this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.50489F));
-            this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
+            this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
             this.weeklyDataTable.Location = new System.Drawing.Point(12, 287);
             this.weeklyDataTable.Name = "weeklyDataTable";
             this.weeklyDataTable.RowCount = 8;
@@ -113,6 +113,7 @@
             this.weekCombo.Name = "weekCombo";
             this.weekCombo.Size = new System.Drawing.Size(172, 21);
             this.weekCombo.TabIndex = 4;
+            this.weekCombo.SelectedValueChanged += new System.EventHandler(this.weekValueChanged);
             // 
             // WeeklyReport
             // 
