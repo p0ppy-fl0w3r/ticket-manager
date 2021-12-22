@@ -23,10 +23,10 @@ namespace Coursework
             // TODO add a permanent solution.
             if (usernameTextBox.Text == "admin")
             {
-                Utils.currentForm = Constants.ADMIN_FORM;
+                Utils.currentForm = Constants.TICKET_FORM;
             }
             else {
-                Utils.currentForm = Constants.TICKET_FORM;
+                Utils.currentForm = Constants.ADMIN_FORM;
             }
             
 
