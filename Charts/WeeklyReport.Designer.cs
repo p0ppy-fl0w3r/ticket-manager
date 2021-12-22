@@ -60,12 +60,12 @@
             // 
             this.weeklyDataTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.weeklyDataTable.ColumnCount = 3;
-            this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.49512F));
-            this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.50489F));
+            this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.49502F));
+            this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.50498F));
             this.weeklyDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
             this.weeklyDataTable.Location = new System.Drawing.Point(12, 287);
             this.weeklyDataTable.Name = "weeklyDataTable";
-            this.weeklyDataTable.RowCount = 8;
+            this.weeklyDataTable.RowCount = 9;
             this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -74,7 +74,8 @@
             this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.weeklyDataTable.Size = new System.Drawing.Size(420, 175);
+            this.weeklyDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.weeklyDataTable.Size = new System.Drawing.Size(420, 193);
             this.weeklyDataTable.TabIndex = 1;
             // 
             // sortCombo
@@ -83,15 +84,16 @@
             this.sortCombo.Items.AddRange(new object[] {
             "Number Of Visitors",
             "Income"});
-            this.sortCombo.Location = new System.Drawing.Point(311, 256);
+            this.sortCombo.Location = new System.Drawing.Point(311, 247);
             this.sortCombo.Name = "sortCombo";
             this.sortCombo.Size = new System.Drawing.Size(121, 21);
             this.sortCombo.TabIndex = 2;
+            this.sortCombo.SelectedIndexChanged += new System.EventHandler(this.sortIndexChanged);
             // 
             // sortByLabel
             // 
             this.sortByLabel.AutoSize = true;
-            this.sortByLabel.Location = new System.Drawing.Point(250, 259);
+            this.sortByLabel.Location = new System.Drawing.Point(250, 250);
             this.sortByLabel.Name = "sortByLabel";
             this.sortByLabel.Size = new System.Drawing.Size(41, 13);
             this.sortByLabel.TabIndex = 3;
@@ -100,7 +102,7 @@
             // weekLabel
             // 
             this.weekLabel.AutoSize = true;
-            this.weekLabel.Location = new System.Drawing.Point(12, 259);
+            this.weekLabel.Location = new System.Drawing.Point(12, 250);
             this.weekLabel.Name = "weekLabel";
             this.weekLabel.Size = new System.Drawing.Size(36, 13);
             this.weekLabel.TabIndex = 5;
@@ -109,7 +111,7 @@
             // weekCombo
             // 
             this.weekCombo.FormattingEnabled = true;
-            this.weekCombo.Location = new System.Drawing.Point(54, 256);
+            this.weekCombo.Location = new System.Drawing.Point(54, 247);
             this.weekCombo.Name = "weekCombo";
             this.weekCombo.Size = new System.Drawing.Size(172, 21);
             this.weekCombo.TabIndex = 4;
