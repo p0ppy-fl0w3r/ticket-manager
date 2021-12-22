@@ -21,11 +21,10 @@ namespace Coursework
         {
             InitializeComponent();
 
-            amountTextBox = new TextBox[] { childOneText, childTwoText, childThreeText, childFourText, childDayText, adultOneText,
-                                            adultTwoText, adultThreeText, adultFourText, adultDayText };
+            amountTextBox = new TextBox[] {  adultOneText, adultTwoText, adultThreeText, adultFourText, adultDayText };
 
             percentTextBox = new MaskedTextBox[] {  holidayDisText, weekendDisText,
-                                            seniorDisText, groupFiveText, groupTenText, groupMoreText};
+                                            seniorDisText,childDisText, groupFiveText, groupTenText, groupMoreText};
 
 
             setTicketDisplay();
@@ -53,12 +52,6 @@ namespace Coursework
             {
                 TicketPrice mTicketPrice = ticketPrice[0];
 
-                childOneText.Text = mTicketPrice.childHourPrice.ToString();
-                childTwoText.Text = mTicketPrice.childTwoHourPrice.ToString();
-                childThreeText.Text = mTicketPrice.childThreeHourPrice.ToString();
-                childFourText.Text = mTicketPrice.childFourHourPrice.ToString();
-                childDayText.Text = mTicketPrice.childDayPrice.ToString();
-
                 adultOneText.Text = mTicketPrice.hourPrice.ToString();
                 adultTwoText.Text = mTicketPrice.twoHourPrice.ToString();
                 adultThreeText.Text = mTicketPrice.threeHourPrice.ToString();
@@ -68,6 +61,7 @@ namespace Coursework
                 holidayDisText.Text = mTicketPrice.holidayDiscount.ToString();
                 weekendDisText.Text = mTicketPrice.weekendDiscount.ToString();
                 seniorDisText.Text = mTicketPrice.seniorDiscount.ToString();
+                childDisText.Text = mTicketPrice.childDiscount.ToString();
                 groupFiveText.Text = mTicketPrice.groupFiveDiscount.ToString();
                 groupTenText.Text = mTicketPrice.groupTenDiscount.ToString();
                 groupMoreText.Text = mTicketPrice.groupFifteenDiscount.ToString();
@@ -104,12 +98,6 @@ namespace Coursework
             }
             else
             {
-                ticketPrice.childHourPrice = double.Parse(childOneText.Text);
-                ticketPrice.childTwoHourPrice = double.Parse(childTwoText.Text);
-                ticketPrice.childThreeHourPrice = double.Parse(childThreeText.Text);
-                ticketPrice.childFourHourPrice = double.Parse(childFourText.Text);
-                ticketPrice.childDayPrice = double.Parse(childDayText.Text);
-
                 ticketPrice.hourPrice = double.Parse(adultOneText.Text);
                 ticketPrice.twoHourPrice = double.Parse(adultTwoText.Text);
                 ticketPrice.threeHourPrice = double.Parse(adultThreeText.Text);
@@ -119,6 +107,7 @@ namespace Coursework
                 ticketPrice.holidayDiscount = double.Parse(holidayDisText.Text.Substring(0, 4));
                 ticketPrice.weekendDiscount = double.Parse(weekendDisText.Text.Substring(0, 4));
                 ticketPrice.seniorDiscount = double.Parse(seniorDisText.Text.Substring(0, 4));
+                ticketPrice.childDiscount = double.Parse(childDisText.Text.Substring(0, 4));
                 ticketPrice.groupFiveDiscount = double.Parse(groupFiveText.Text.Substring(0, 4));
                 ticketPrice.groupTenDiscount = double.Parse(groupTenText.Text.Substring(0, 4));
                 ticketPrice.groupFifteenDiscount = double.Parse(groupMoreText.Text.Substring(0, 4));

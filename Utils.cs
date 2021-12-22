@@ -176,5 +176,9 @@ namespace Coursework
             animationThread.Start();
         }
 
+        public static bool isWeekend(DateTime dateTime) {
+            return dateTime.DayOfWeek == DayOfWeek.Sunday || dateTime.DayOfWeek == DayOfWeek.Saturday;
+        }
+
     }
 }

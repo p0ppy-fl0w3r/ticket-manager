@@ -43,6 +43,14 @@ namespace Coursework
             phoneNumberText.ResetText();
             ageText.ResetText();
 
+            childCount.ResetText();
+            seniorCount.ResetText();
+            adultCount.ResetText();
+            holidayCount.ResetText();
+            weekendCount.ResetText();
+            grossTotal.ResetText();
+            netTotal.ResetText();
+
             genderCombo.SelectedIndex = -1;
             genderCombo.Text = "--Select Gender--";
 
@@ -111,7 +119,7 @@ namespace Coursework
 
         private void ticketKeyPressed(object sender, KeyEventArgs e)
         {
-
+            // TODO add a checked out status
             // Check if the user pressed return 
             if (e.KeyValue == (char)13)
             {
@@ -133,17 +141,14 @@ namespace Coursework
 
                     setFieldState(false);
 
+                    List<TicketPrice> ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
+
                     if (selectedVisitors.Count == 1)
                     {
 
                         Visitor mVisitor = selectedVisitors[0];
 
-                        if (mVisitor.endTime == null)
-                        {
-                            // The visitor has not checked out. Enable end time and save
-                            endTimePicker.Enabled = true;
-                            saveButton.Enabled = true;
-                        }
+                        saveButton.Enabled = mVisitor.endTime == null;
 
                         setVisitorFields(mVisitor);
                     }
@@ -162,10 +167,28 @@ namespace Coursework
                             groupListBox.Items.Add(item.name);
                         }
 
-                        endTimePicker.Enabled = notCheckedOut;
                         saveButton.Enabled = notCheckedOut;
 
                         setVisitorFields(groupVisitors[0]);
+                    }
+
+
+                    if (ticketList.Count < 1)
+                    {
+                        MessageBox.Show("Looks like there is no price data. Please contact the administrator.", "No Data.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        saveButton.Enabled = false;
+                    }
+                    else
+                    {
+                        setPriceFields(selectedVisitors, ticketList[0]);
+                        if (selectedVisitors[0].endTime != null)
+                        {
+                            grossTotal.ResetText();
+                            weekendCount.ResetText();
+                            holidayCount.ResetText();
+
+                            netTotal.Text = selectedVisitors[0].checkoutPrice.ToString();
+                        }
                     }
 
                 }
@@ -292,10 +315,9 @@ namespace Coursework
                     {
                         MessageBox.Show("Checked-out at: " + endTimePicker.Value.ToString("g"), "Checked out!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // DEBUG
                         List<Visitor> originalVisitorData = Utils.getFromFile<Visitor>(Constants.VISITOR_FILE);
                         List<Visitor> selectedVisitorData = originalVisitorData.Where(x => x.ticketId == visitor.ticketId).ToList();
-                        selectedVisitorData.ForEach(x => x.endTime = visitor.endTime);
+                        selectedVisitorData.ForEach(x => { x.endTime = visitor.endTime; x.checkoutPrice = Double.Parse(netTotal.Text); } );
 
                         originalVisitorData.Union(selectedVisitorData);
 
@@ -367,6 +389,98 @@ namespace Coursework
 
         }
 
+        private void setPriceFields(List<Visitor> visitors, TicketPrice ticket)
+        {
+            int childCount = 0;
+            int adultCount = 0;
+            int seniorCount = 0;
+
+            int totalVisitor = visitors.Count;
+
+            foreach (Visitor visitor in visitors)
+            {
+                if (visitor.age <= 12)
+                {
+                    childCount++;
+                }
+                else if (visitor.age > 12 && visitor.age <= 65)
+                {
+                    adultCount++;
+                }
+                else
+                {
+                    seniorCount++;
+                }
+            }
+
+            this.childCount.Text = childCount.ToString();
+            this.adultCount.Text = adultCount.ToString();
+            this.seniorCount.Text = seniorCount.ToString();
+
+            int timeSpent = endTimePicker.Value.Subtract(DateTime.Parse(visitors[0].startTime)).Hours;
+
+            double ticketPrice;
+            if (timeSpent <= 1)
+            {
+                ticketPrice = ticket.hourPrice;
+            }
+            else if (timeSpent <= 2)
+            {
+                ticketPrice = ticket.twoHourPrice;
+            }
+            else if (timeSpent <= 3)
+            {
+                ticketPrice = ticket.threeHourPrice;
+            }
+            else if (timeSpent <= 4)
+            {
+                ticketPrice = ticket.fourHourPrice;
+            }
+            else
+            {
+                ticketPrice = ticket.dayPrice;
+            }
+
+            double grossAmount = totalVisitor * ticketPrice;
+
+            double childPrice = childCount * (ticketPrice - ((ticket.childDiscount * ticketPrice) / 100));
+            double seniorPrice = seniorCount * (ticketPrice - ((ticket.seniorDiscount * ticketPrice) / 100));
+            double adultPrice = adultCount * ticketPrice;
+
+            double groupDiscount = 0.0;
+            if (totalVisitor >= 5 && totalVisitor < 10)
+            {
+                groupDiscount = ticket.groupFiveDiscount;
+            }
+            else if (totalVisitor >= 10 && totalVisitor < 15)
+            {
+                groupDiscount = ticket.groupTenDiscount;
+            }
+            else if (totalVisitor >= 15)
+            {
+                groupDiscount = ticket.groupFifteenDiscount;
+            }
+
+            double weekendDiscount = Utils.isWeekend(DateTime.Parse(visitors[0].startTime)) ? ticket.weekendDiscount : 0.0;
+            double holidayDiscount = visitors[0].receivedHolidayDiscount ? ticket.holidayDiscount : 0.0;
+
+            // Set holiday, grossAmount and weekend discount label text.
+            holidayCount.Text = holidayDiscount.ToString();
+            weekendCount.Text = weekendDiscount.ToString();
+            grossTotal.Text = grossAmount.ToString();
+
+            double grossVisitorPrice = childPrice + seniorPrice + adultPrice;
+            double grossGroupPrice = grossVisitorPrice - ((groupDiscount * grossVisitorPrice) / 100);
+            double grossWeekendPrice = grossGroupPrice - ((weekendDiscount * grossGroupPrice) / 100);
+            double netPrice = grossWeekendPrice - ((holidayDiscount * grossWeekendPrice) / 100);
+
+            netTotal.Text = netPrice.ToString();
+
+
+
+
+        }
+
         private bool validateFields()
         {
             // TODO add validation for opening and close time
@@ -384,7 +498,7 @@ namespace Coursework
                 isValid = false;
             }
 
-            if (int.Parse(ageText.Text) > 150)
+            else if (int.Parse(ageText.Text) > 150)
             {
                 Utils.animateTextBase(ageText);
                 isValid = false;
