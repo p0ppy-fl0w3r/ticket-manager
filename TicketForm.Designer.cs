@@ -61,6 +61,13 @@ namespace Coursework
             this.saveButton = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.checkoutButton = new System.Windows.Forms.Button();
+            this.childCount = new System.Windows.Forms.Label();
+            this.adultCount = new System.Windows.Forms.Label();
+            this.seniorCount = new System.Windows.Forms.Label();
+            this.holidayCount = new System.Windows.Forms.Label();
+            this.weekendCount = new System.Windows.Forms.Label();
+            this.grossTotal = new System.Windows.Forms.Label();
+            this.netTotal = new System.Windows.Forms.Label();
             this.customerInfoPanel.SuspendLayout();
             this.ticketPanel.SuspendLayout();
             this.SuspendLayout();
@@ -253,6 +260,13 @@ namespace Coursework
             // 
             this.ticketPanel.BackColor = System.Drawing.Color.GhostWhite;
             this.ticketPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ticketPanel.Controls.Add(this.netTotal);
+            this.ticketPanel.Controls.Add(this.grossTotal);
+            this.ticketPanel.Controls.Add(this.weekendCount);
+            this.ticketPanel.Controls.Add(this.holidayCount);
+            this.ticketPanel.Controls.Add(this.seniorCount);
+            this.ticketPanel.Controls.Add(this.adultCount);
+            this.ticketPanel.Controls.Add(this.childCount);
             this.ticketPanel.Controls.Add(this.tickedIdText);
             this.ticketPanel.Controls.Add(this.netTotalLabel);
             this.ticketPanel.Controls.Add(this.grossTotalLabel);
@@ -420,6 +434,63 @@ namespace Coursework
             this.checkoutButton.UseVisualStyleBackColor = false;
             this.checkoutButton.Click += new System.EventHandler(this.checkoutButton_Click);
             // 
+            // childCount
+            // 
+            this.childCount.AutoSize = true;
+            this.childCount.Location = new System.Drawing.Point(126, 45);
+            this.childCount.Name = "childCount";
+            this.childCount.Size = new System.Drawing.Size(0, 13);
+            this.childCount.TabIndex = 23;
+            // 
+            // adultCount
+            // 
+            this.adultCount.AutoSize = true;
+            this.adultCount.Location = new System.Drawing.Point(126, 65);
+            this.adultCount.Name = "adultCount";
+            this.adultCount.Size = new System.Drawing.Size(0, 13);
+            this.adultCount.TabIndex = 24;
+            // 
+            // seniorCount
+            // 
+            this.seniorCount.AutoSize = true;
+            this.seniorCount.Location = new System.Drawing.Point(126, 84);
+            this.seniorCount.Name = "seniorCount";
+            this.seniorCount.Size = new System.Drawing.Size(0, 13);
+            this.seniorCount.TabIndex = 25;
+            // 
+            // holidayCount
+            // 
+            this.holidayCount.AutoSize = true;
+            this.holidayCount.Location = new System.Drawing.Point(126, 104);
+            this.holidayCount.Name = "holidayCount";
+            this.holidayCount.Size = new System.Drawing.Size(0, 13);
+            this.holidayCount.TabIndex = 26;
+            // 
+            // weekendCount
+            // 
+            this.weekendCount.AutoSize = true;
+            this.weekendCount.Location = new System.Drawing.Point(126, 124);
+            this.weekendCount.Name = "weekendCount";
+            this.weekendCount.Size = new System.Drawing.Size(0, 13);
+            this.weekendCount.TabIndex = 27;
+            // 
+            // grossTotal
+            // 
+            this.grossTotal.AutoSize = true;
+            this.grossTotal.Location = new System.Drawing.Point(126, 146);
+            this.grossTotal.Name = "grossTotal";
+            this.grossTotal.Size = new System.Drawing.Size(0, 13);
+            this.grossTotal.TabIndex = 28;
+            // 
+            // netTotal
+            // 
+            this.netTotal.AutoSize = true;
+            this.netTotal.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.netTotal.Location = new System.Drawing.Point(125, 166);
+            this.netTotal.Name = "netTotal";
+            this.netTotal.Size = new System.Drawing.Size(0, 24);
+            this.netTotal.TabIndex = 29;
+            // 
             // TicketForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -477,5 +548,12 @@ namespace Coursework
         private Label phoneNumberLabel;
         private DateTimePicker endTimePicker;
         private Label endTimeLabel;
+        private Label netTotal;
+        private Label grossTotal;
+        private Label weekendCount;
+        private Label holidayCount;
+        private Label seniorCount;
+        private Label adultCount;
+        private Label childCount;
     }
 }
