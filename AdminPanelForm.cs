@@ -65,6 +65,9 @@ namespace Coursework
                 groupFiveText.Text = Utils.properDoubleString(mTicketPrice.groupFiveDiscount);
                 groupTenText.Text = Utils.properDoubleString(mTicketPrice.groupTenDiscount);
                 groupMoreText.Text = Utils.properDoubleString(mTicketPrice.groupFifteenDiscount);
+
+                startTimePicker.Value = DateTime.Parse(mTicketPrice.openTime);
+                closeTimePicker.Value = DateTime.Parse(mTicketPrice.closeTime);
             }
         }
 
@@ -91,17 +94,21 @@ namespace Coursework
                 }
             }
 
-            if (closeTimePicker.Value.Subtract(startTimePicker.Value).Minutes < 0)
+            if (closeTimePicker.Value.Subtract(startTimePicker.Value).TotalMinutes <= 0)
             {
                 isError = true;
                 Utils.animateTextBase(openTimeLabel);
                 Utils.animateTextBase(closeLabel);
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.Show("End time can't be before start time", closeTimePicker, new Point(closeTimePicker.Size), 2000);
             }
 
+            System.Diagnostics.Debug.WriteLine("Sub time: " + closeTimePicker.Value.Subtract(startTimePicker.Value).TotalMinutes.ToString());
 
             if (isError)
             {
-                MessageBox.Show("Some of the fields are empty!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Some of the fields are not valid!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {

@@ -77,6 +77,7 @@ namespace Coursework
             this.passwordTextBox.Size = new System.Drawing.Size(158, 27);
             this.passwordTextBox.TabIndex = 4;
             this.passwordTextBox.UseSystemPasswordChar = true;
+            this.passwordTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passswordKeyDown);
             // 
             // loginButton
             // 
