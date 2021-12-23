@@ -62,12 +62,6 @@
     <Compile Include="Charts\DailyReport.Designer.cs">
       <DependentUpon>DailyReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="Charts\FinancialReport.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Charts\FinancialReport.Designer.cs">
-      <DependentUpon>FinancialReport.cs</DependentUpon>
-    </Compile>
     <Compile Include="Charts\WeeklyReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,9 +104,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Charts\DailyReport.resx">
       <DependentUpon>DailyReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Charts\FinancialReport.resx">
-      <DependentUpon>FinancialReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Charts\WeeklyReport.resx">
       <DependentUpon>WeeklyReport.cs</DependentUpon>
