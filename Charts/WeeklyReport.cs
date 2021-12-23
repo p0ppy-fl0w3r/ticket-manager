@@ -103,15 +103,22 @@ namespace Coursework.Charts
         {
             System.Diagnostics.Debug.WriteLine("The value was changed to " + weekCombo.SelectedItem.ToString());
 
-            setTableData(weekCombo.SelectedItem.ToString());
-            setChartData(weekCombo.SelectedItem.ToString());
+            setTableData(weekCombo.SelectedItem.ToString(), null);
+            setChartData(weekCombo.SelectedItem.ToString(), false);
         }
 
-        private void setTableData(string dateValue)
+        private class WeekData { 
+            public string WeekDay { get; set; }
+            public int Count { get; set; }
+            public double Income { get; set; }
+        }
+
+        // TODO write doc comment
+        private void setTableData(string dateValue, bool? sortByIncome)
         {
             var tableData = weekVisitors[dateValue].GroupBy(v => (int)DateTime.Parse(v.startTime).DayOfWeek).Select(x => new
             {
-                WeekDay = x.Key,
+                WeekDayNum = x.Key,
                 Count = x.Count(),
                 Income = x.Sum(v => v.checkoutPrice)
             });
@@ -119,44 +126,71 @@ namespace Coursework.Charts
             weeklyDataTable.Controls.Clear();
             initTable();
 
+            List<WeekData> weekTableData = new List<WeekData>();    
+
+
+            // Get the weekly visitor data
             int totalVisitor = 0;
             double totalIncome = 0;
             for (int i = 0; i < 7; i++)
             {
-                weeklyDataTable.Controls.Add(new Label() { Text = ((DayOfWeek)i).ToString() }, 0, 1 + i);
+                WeekData weekData = new WeekData();
+                weekData.WeekDay = ((DayOfWeek)i).ToString();
 
                 int count = 0;
                 double income = 0.0;
                 // Set the count to number of visitors in that particular day of the week.
-                var visitorData = tableData.Where(x => x.WeekDay == (i)).ElementAtOrDefault(0);
+                var visitorData = tableData.Where(x => x.WeekDayNum == (i)).ElementAtOrDefault(0);
                 if (visitorData != null)
                 {
                     count = visitorData.Count;
                     income = visitorData.Income;
+
                 }
+
+                weekData.Income = income;
+                weekData.Count = count;
+
                 totalVisitor += count;
                 totalIncome += income;
 
-                weeklyDataTable.Controls.Add(new Label() { Text = count.ToString(), AutoSize = true }, 1, i + 1);
-                weeklyDataTable.Controls.Add(new Label() { Text = income.ToString(), AutoSize = true }, 2, i + 1);
+                weekTableData.Add(weekData);
             }
 
+            if (sortByIncome != null)
+            {
+                mergeSort(weekTableData, (bool)sortByIncome);
+            }
+            
+            // Display the weekly visitor data in table.
+            for (int i = 0; i < weekTableData.Count; i++)
+            {
+                weeklyDataTable.Controls.Add(new Label() { Text = weekTableData[i].WeekDay }, 0, 1 + i);
+                weeklyDataTable.Controls.Add(new Label() { Text = weekTableData[i].Count.ToString(), AutoSize = true }, 1, i + 1);
+                weeklyDataTable.Controls.Add(new Label() { Text = weekTableData[i].Income.ToString(), AutoSize = true }, 2, i + 1);
+            }
 
             weeklyDataTable.Controls.Add(new Label() { Text = "Grand Total: ", Font = boldFont, AutoSize = true }, 0, 8);
             weeklyDataTable.Controls.Add(new Label() { Text = totalVisitor.ToString(), Font = boldFont, AutoSize = true }, 1, 8);
             weeklyDataTable.Controls.Add(new Label() { Text = totalIncome.ToString(), Font = boldFont, AutoSize = true }, 2, 8);
         }
 
-        private void setChartData(string dateValue)
+        // TODO write doc comment.
+        private void setChartData(string dateValue, bool isIncome)
         {
             var chartData = weekVisitors[dateValue].GroupBy(v => DateTime.Parse(v.startTime).DayOfWeek.ToString().Substring(0, 2)).Select(x => new
             {
                 WeekDay = x.Key,
                 Count = x.Count(),
+                Income = x.Sum(v => v.checkoutPrice)
             });
 
             weeklyDataChart.Series[0].XValueMember = "WeekDay";
-            weeklyDataChart.Series[0].YValueMembers = "Count";
+            weeklyDataChart.Series[0].YValueMembers = isIncome? "Income": "Count";
+
+            weeklyDataChart.Series[0].Name = isIncome ? "Total Income" : "No. Visitors";
+            weeklyDataChart.Series[0].Color = isIncome ? Color.MediumTurquoise: Color.Crimson;
+
 
             weeklyDataChart.DataSource = chartData;
             weeklyDataChart.DataBind();
@@ -167,6 +201,87 @@ namespace Coursework.Charts
             // TODO change chart series name
             // TODO sort the table
             // TODO see coursework guidelines no.3(page 4)
+            // TODO enclose in try catch
+            if (sortCombo.SelectedIndex == 0)
+            {
+                // Sort by number of visitors
+                setTableData(weekCombo.SelectedItem.ToString(), false);
+            }
+            else if (sortCombo.SelectedIndex == 1)
+            {
+                // Sort by total income
+                setTableData(weekCombo.SelectedItem.ToString(), true);
+            }
+            else
+            {
+                setTableData(weekCombo.SelectedItem.ToString(), null);
+            }
+        }
+
+
+        // TODO write doc comment
+        private static void mergeSort(List<WeekData> arr, bool isIncome)
+        {
+            if (arr.Count == 1)
+            {
+                return;
+            }
+
+            List<WeekData> left = arr.Take(arr.Count / 2).ToList();
+            List<WeekData> right = arr.Skip(left.Count).ToList();
+
+            mergeSort(left, isIncome);
+            mergeSort(right, isIncome);
+            merge(left, right, arr, isIncome);
+        }
+
+        private static void merge(List<WeekData> left, List<WeekData> right, List<WeekData> list, bool isIncome)
+        {
+            int indexLeft = 0;
+            int indexRight = 0;
+            int indexList = 0;
+
+            while (indexLeft < left.Count && indexRight < right.Count)
+            {
+                if ((isIncome ? left[indexLeft].Income : left[indexLeft].Count) > (isIncome ? right[indexRight].Income : right[indexRight].Count))
+                {
+                    list[indexList] = left[indexLeft];
+                    indexLeft++;
+                }
+                else
+                {
+                    list[indexList] = right[indexRight];
+                    indexRight++;
+                }
+                indexList++;
+            }
+
+            while (indexLeft < left.Count)
+            {
+                list[indexList] = left[indexLeft];
+                indexLeft++;
+                indexList++;
+            }
+
+            while (indexRight < right.Count)
+            {
+                list[indexList] = right[indexRight];
+                indexRight++;
+                indexList++;
+            }
+        }
+
+        private void chartDoubleClick(object sender, EventArgs e)
+        {
+            if (weeklyDataChart.Series[0].YValueMembers == "Income")
+            {
+                setChartData(weekCombo.SelectedItem.ToString(), false);
+            }
+            else
+            {
+                setChartData(weekCombo.SelectedItem.ToString(), true);
+            }
+            
         }
     }
 }

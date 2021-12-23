@@ -21,14 +21,15 @@ namespace Coursework
         {
             // TODO add validation here.
             // TODO add a permanent solution.
+
             if (usernameTextBox.Text == "admin")
             {
                 Utils.currentForm = Constants.TICKET_FORM;
             }
-            else {
+            else
+            {
                 Utils.currentForm = Constants.ADMIN_FORM;
             }
-            
 
         }
     }
