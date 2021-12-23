@@ -13,6 +13,7 @@ namespace Coursework
 {
     public partial class TicketForm : Form
     {
+        private List<TicketPrice> ticketList;
         private List<Visitor> groupVisitors = new List<Visitor>();
         public TicketForm()
         {
@@ -21,7 +22,7 @@ namespace Coursework
             setInitState(true);
 
             // Make sure there's data for ticket price before allowing the user to add new visitor info.
-            List<TicketPrice> ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
+            ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
             if (ticketList.Count < 1)
             {
                 MessageBox.Show("Looks like there is no price data. Please contact the administrator.", "No Data.", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -130,7 +131,7 @@ namespace Coursework
         {
             // TODO add a checked out status
             // Check if the user pressed return 
-            if (e.KeyValue == (char)13)
+            if (e.KeyCode == Keys.Enter)
             {
                 int ticketId = int.Parse(tickedIdText.Text);
 
@@ -181,7 +182,7 @@ namespace Coursework
                     }
 
                     // Make sure that the ticket price file hasn't been deleted or moved. 
-                    List<TicketPrice> ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
+                    ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
                     if (ticketList.Count < 1)
                     {
                         MessageBox.Show("Looks like there is no price data. Please contact the administrator.", "No Data.", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -525,15 +526,33 @@ namespace Coursework
                 isValid = false;
             }
 
+            if (startTimePicker.Value.TimeOfDay.Subtract(DateTime.Parse(ticketList[0].openTime).TimeOfDay).TotalMinutes < 0 )
+            {
+                isValid = false;
+                Utils.animateTextBase(startTimeLabel);
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.Show("The park doesn't open until "+ DateTime.Parse(ticketList[0].openTime).ToString("t"), startTimePicker, new Point(startTimePicker.Size), 3000);
+            }
+
+            if ( (DateTime.Parse(ticketList[0].closeTime).TimeOfDay).Subtract(startTimePicker.Value.TimeOfDay).TotalMinutes < 0)
+            {
+                isValid = false;
+                Utils.animateTextBase(startTimeLabel);
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.Show("The park closes by " + DateTime.Parse(ticketList[0].closeTime).ToString("t"), startTimePicker, new Point(startTimePicker.Size), 3000);
+            }
+
             if (endTimePicker.Visible)
             {
-                if (endTimePicker.Value.Subtract(startTimePicker.Value).Seconds < 0)
+                if (endTimePicker.Value.Subtract(startTimePicker.Value).TotalMinutes <= 0)
                 {
                     isValid = false;
                     Utils.animateTextBase(endTimeLabel);
 
                     ToolTip toolTip = new ToolTip();
-                    toolTip.Show("End time can't be before start time", endTimePicker, new Point(endTimePicker.Size), 2000);
+                    toolTip.Show("End time can't be before start time", endTimePicker, new Point(endTimePicker.Size), 3000);
 
                 }
             }

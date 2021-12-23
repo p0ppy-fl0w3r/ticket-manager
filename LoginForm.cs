@@ -19,18 +19,30 @@ namespace Coursework
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            // TODO add validation here.
-            // TODO add a permanent solution.
+            logUserIn();
+        }
 
-            if (usernameTextBox.Text == "admin")
+        private void logUserIn() {
+            if (usernameTextBox.Text == "admin" && passwordTextBox.Text == "admin")
+            {
+                Utils.currentForm = Constants.ADMIN_FORM;
+            }
+            else if (usernameTextBox.Text == "user" && passwordTextBox.Text == "user")
             {
                 Utils.currentForm = Constants.TICKET_FORM;
             }
             else
             {
-                Utils.currentForm = Constants.ADMIN_FORM;
+                MessageBox.Show("Username or Password incorrect!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
 
+        private void passswordKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                logUserIn();
+            }
         }
     }
 }
