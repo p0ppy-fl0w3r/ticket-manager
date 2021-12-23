@@ -20,6 +20,15 @@ namespace Coursework
 
             setInitState(true);
 
+            // Make sure there's data for ticket price before allowing the user to add new visitor info.
+            List<TicketPrice> ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
+            if (ticketList.Count < 1)
+            {
+                MessageBox.Show("Looks like there is no price data. Please contact the administrator.", "No Data.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                saveButton.Enabled = false;
+                cancelButton.Enabled = false;
+                checkoutButton.Enabled = false;
+            }
         }
 
         private void setInitState(bool setTime)
@@ -140,8 +149,7 @@ namespace Coursework
                     ticketIdLabel.Focus();
 
                     setFieldState(false);
-
-                    List<TicketPrice> ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
+                    
 
                     if (selectedVisitors.Count == 1)
                     {
@@ -172,7 +180,8 @@ namespace Coursework
                         setVisitorFields(groupVisitors[0]);
                     }
 
-
+                    // Make sure that the ticket price file hasn't been deleted or moved. 
+                    List<TicketPrice> ticketList = Utils.getFromFile<TicketPrice>(Constants.TICKET_FILE);
                     if (ticketList.Count < 1)
                     {
                         MessageBox.Show("Looks like there is no price data. Please contact the administrator.", "No Data.", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -302,8 +311,6 @@ namespace Coursework
 
                     if (endTimePicker.Visible)
                     {
-                        // TODO add price calculations here
-
                         visitor.endTime = endTimePicker.Value.ToString();
                         ticketId = int.Parse(tickedIdText.Text.ToString());
                     }
@@ -475,10 +482,6 @@ namespace Coursework
             double netPrice = grossWeekendPrice - ((holidayDiscount * grossWeekendPrice) / 100);
 
             netTotal.Text = netPrice.ToString();
-
-
-
-
         }
 
         private bool validateFields()
@@ -493,6 +496,12 @@ namespace Coursework
             }
 
             if (ageText.Text.Length < 1)
+            {
+                Utils.animateTextBase(ageText);
+                isValid = false;
+            }
+
+            else if (ageText.Text.Length > 3)
             {
                 Utils.animateTextBase(ageText);
                 isValid = false;

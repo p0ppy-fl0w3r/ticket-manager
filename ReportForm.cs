@@ -17,8 +17,7 @@ namespace Coursework
         public ReportForm()
         {
             InitializeComponent();
-
-            // TODO add null and empty value checks on charts
+            
             initVisitorList();
 
             Utils.navigate(new DailyReport(), chartPanel);

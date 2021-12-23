@@ -21,7 +21,7 @@ namespace Coursework
         {
             InitializeComponent();
 
-            amountTextBox = new TextBox[] {  adultOneText, adultTwoText, adultThreeText, adultFourText, adultDayText };
+            amountTextBox = new TextBox[] { adultOneText, adultTwoText, adultThreeText, adultFourText, adultDayText };
 
             percentTextBox = new MaskedTextBox[] {  holidayDisText, weekendDisText,
                                             seniorDisText,childDisText, groupFiveText, groupTenText, groupMoreText};
@@ -54,8 +54,8 @@ namespace Coursework
 
                 adultOneText.Text = mTicketPrice.hourPrice.ToString();
                 adultTwoText.Text = mTicketPrice.twoHourPrice.ToString();
-                adultThreeText.Text =mTicketPrice.threeHourPrice.ToString();
-                adultFourText.Text =mTicketPrice.fourHourPrice.ToString();
+                adultThreeText.Text = mTicketPrice.threeHourPrice.ToString();
+                adultFourText.Text = mTicketPrice.fourHourPrice.ToString();
                 adultDayText.Text = mTicketPrice.dayPrice.ToString();
 
                 holidayDisText.Text = Utils.properDoubleString(mTicketPrice.holidayDiscount);
@@ -72,7 +72,6 @@ namespace Coursework
         {
             TicketPrice ticketPrice = new TicketPrice();
 
-            // TODO add validation
             bool isError = false;
             foreach (TextBox tBox in amountTextBox)
             {
@@ -91,6 +90,14 @@ namespace Coursework
                     Utils.animateTextBase(maskedBox);
                 }
             }
+
+            if (closeTimePicker.Value.Subtract(startTimePicker.Value).Minutes < 0)
+            {
+                isError = true;
+                Utils.animateTextBase(openTimeLabel);
+                Utils.animateTextBase(closeLabel);
+            }
+
 
             if (isError)
             {
@@ -111,6 +118,9 @@ namespace Coursework
                 ticketPrice.groupFiveDiscount = double.Parse(groupFiveText.Text.Substring(0, 4));
                 ticketPrice.groupTenDiscount = double.Parse(groupTenText.Text.Substring(0, 4));
                 ticketPrice.groupFifteenDiscount = double.Parse(groupMoreText.Text.Substring(0, 4));
+
+                ticketPrice.openTime = startTimePicker.Value.ToString();
+                ticketPrice.closeTime = closeTimePicker.Value.ToString();
 
                 Utils.writeToFile(ticketPrice.toJson(), Constants.TICKET_FILE);
 

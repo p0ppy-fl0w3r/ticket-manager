@@ -37,7 +37,7 @@ namespace Coursework
                  */
                 control.Dispose();
             }
-            panel.Controls.Clear(); // TODO check if this is redundant
+            panel.Controls.Clear();
 
             // Garbage collect to free up memory.
             GC.Collect();

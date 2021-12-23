@@ -20,8 +20,6 @@ namespace Coursework.Charts
         private Dictionary<string, int> groupRangeDict;
         public DailyReport()
         {
-            // TODO read the visitor in the report class and pass the values in constructors. 
-            // TODO sort the date values.
             InitializeComponent();
 
             ageRangeDict = new Dictionary<string, int>();
@@ -29,7 +27,10 @@ namespace Coursework.Charts
 
             setDateComboItems();
 
-            setGroupData(DateTime.Now.ToString(Constants.DATE_FORMAT));
+            if (dateCombo.Items.Count > 0)
+            {
+                dateCombo.SelectedIndex = 0;
+            }
         }
         private void radioCheckChanged(object sender, EventArgs e)
         {
@@ -68,8 +69,6 @@ namespace Coursework.Charts
             List<String> dateItems = Utils.visitorsList.Select(x => getDateFormatted(x)).ToList();
 
             dateCombo.DataSource = dateItems.ToHashSet<String>().ToList();
-
-            // TODO add today logic
         }
 
         private String getDateFormatted(Visitor visitor)
