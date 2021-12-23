@@ -24,6 +24,9 @@ namespace Coursework.Models
         public double groupTenDiscount { get; set; }
         public double groupFifteenDiscount { get; set; }
 
+        public string openTime { get; set; }
+        public string closeTime { get; set; }
+
         public string toJson() {
             return JsonConvert.SerializeObject(this);
         }

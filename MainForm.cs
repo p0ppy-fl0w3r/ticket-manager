@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 namespace Coursework
 {
-    // TODO use masked text box while validating fields in ticket system
     public partial class MainForm : Form
     {
         public string current = Constants.LOGIN_FORM;

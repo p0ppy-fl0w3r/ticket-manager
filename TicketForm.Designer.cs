@@ -47,6 +47,13 @@ namespace Coursework
             this.nameText = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.ticketPanel = new System.Windows.Forms.Panel();
+            this.netTotal = new System.Windows.Forms.Label();
+            this.grossTotal = new System.Windows.Forms.Label();
+            this.weekendCount = new System.Windows.Forms.Label();
+            this.holidayCount = new System.Windows.Forms.Label();
+            this.seniorCount = new System.Windows.Forms.Label();
+            this.adultCount = new System.Windows.Forms.Label();
+            this.childCount = new System.Windows.Forms.Label();
             this.tickedIdText = new System.Windows.Forms.TextBox();
             this.netTotalLabel = new System.Windows.Forms.Label();
             this.grossTotalLabel = new System.Windows.Forms.Label();
@@ -59,15 +66,8 @@ namespace Coursework
             this.groupListBox = new System.Windows.Forms.ListBox();
             this.nextPersonButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.checkoutButton = new System.Windows.Forms.Button();
-            this.childCount = new System.Windows.Forms.Label();
-            this.adultCount = new System.Windows.Forms.Label();
-            this.seniorCount = new System.Windows.Forms.Label();
-            this.holidayCount = new System.Windows.Forms.Label();
-            this.weekendCount = new System.Windows.Forms.Label();
-            this.grossTotal = new System.Windows.Forms.Label();
-            this.netTotal = new System.Windows.Forms.Label();
             this.customerInfoPanel.SuspendLayout();
             this.ticketPanel.SuspendLayout();
             this.SuspendLayout();
@@ -133,6 +133,7 @@ namespace Coursework
             this.endTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
             this.endTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
             this.endTimePicker.Name = "endTimePicker";
+            this.endTimePicker.ShowUpDown = true;
             this.endTimePicker.Size = new System.Drawing.Size(102, 20);
             this.endTimePicker.TabIndex = 18;
             // 
@@ -154,6 +155,7 @@ namespace Coursework
             this.startTimePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
             this.startTimePicker.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
             this.startTimePicker.Name = "startTimePicker";
+            this.startTimePicker.ShowUpDown = true;
             this.startTimePicker.Size = new System.Drawing.Size(102, 20);
             this.startTimePicker.TabIndex = 16;
             // 
@@ -281,6 +283,63 @@ namespace Coursework
             this.ticketPanel.Size = new System.Drawing.Size(249, 208);
             this.ticketPanel.TabIndex = 15;
             // 
+            // netTotal
+            // 
+            this.netTotal.AutoSize = true;
+            this.netTotal.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
+            this.netTotal.Location = new System.Drawing.Point(125, 166);
+            this.netTotal.Name = "netTotal";
+            this.netTotal.Size = new System.Drawing.Size(0, 24);
+            this.netTotal.TabIndex = 29;
+            // 
+            // grossTotal
+            // 
+            this.grossTotal.AutoSize = true;
+            this.grossTotal.Location = new System.Drawing.Point(126, 146);
+            this.grossTotal.Name = "grossTotal";
+            this.grossTotal.Size = new System.Drawing.Size(0, 13);
+            this.grossTotal.TabIndex = 28;
+            // 
+            // weekendCount
+            // 
+            this.weekendCount.AutoSize = true;
+            this.weekendCount.Location = new System.Drawing.Point(126, 124);
+            this.weekendCount.Name = "weekendCount";
+            this.weekendCount.Size = new System.Drawing.Size(0, 13);
+            this.weekendCount.TabIndex = 27;
+            // 
+            // holidayCount
+            // 
+            this.holidayCount.AutoSize = true;
+            this.holidayCount.Location = new System.Drawing.Point(126, 104);
+            this.holidayCount.Name = "holidayCount";
+            this.holidayCount.Size = new System.Drawing.Size(0, 13);
+            this.holidayCount.TabIndex = 26;
+            // 
+            // seniorCount
+            // 
+            this.seniorCount.AutoSize = true;
+            this.seniorCount.Location = new System.Drawing.Point(126, 84);
+            this.seniorCount.Name = "seniorCount";
+            this.seniorCount.Size = new System.Drawing.Size(0, 13);
+            this.seniorCount.TabIndex = 25;
+            // 
+            // adultCount
+            // 
+            this.adultCount.AutoSize = true;
+            this.adultCount.Location = new System.Drawing.Point(126, 65);
+            this.adultCount.Name = "adultCount";
+            this.adultCount.Size = new System.Drawing.Size(0, 13);
+            this.adultCount.TabIndex = 24;
+            // 
+            // childCount
+            // 
+            this.childCount.AutoSize = true;
+            this.childCount.Location = new System.Drawing.Point(126, 45);
+            this.childCount.Name = "childCount";
+            this.childCount.Size = new System.Drawing.Size(0, 13);
+            this.childCount.TabIndex = 23;
+            // 
             // tickedIdText
             // 
             this.tickedIdText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -407,19 +466,19 @@ namespace Coursework
             this.saveButton.UseVisualStyleBackColor = false;
             this.saveButton.Click += new System.EventHandler(this.saveButtonClicked);
             // 
-            // Cancel
+            // cancelButton
             // 
-            this.Cancel.BackColor = System.Drawing.Color.Crimson;
-            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Cancel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.Cancel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Cancel.Location = new System.Drawing.Point(474, 423);
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(87, 36);
-            this.Cancel.TabIndex = 19;
-            this.Cancel.Text = "Cancel";
-            this.Cancel.UseVisualStyleBackColor = false;
-            this.Cancel.Click += new System.EventHandler(this.cancelButtonClicked);
+            this.cancelButton.BackColor = System.Drawing.Color.Crimson;
+            this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.cancelButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cancelButton.Location = new System.Drawing.Point(474, 423);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(87, 36);
+            this.cancelButton.TabIndex = 19;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = false;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButtonClicked);
             // 
             // checkoutButton
             // 
@@ -434,70 +493,13 @@ namespace Coursework
             this.checkoutButton.UseVisualStyleBackColor = false;
             this.checkoutButton.Click += new System.EventHandler(this.checkoutButton_Click);
             // 
-            // childCount
-            // 
-            this.childCount.AutoSize = true;
-            this.childCount.Location = new System.Drawing.Point(126, 45);
-            this.childCount.Name = "childCount";
-            this.childCount.Size = new System.Drawing.Size(0, 13);
-            this.childCount.TabIndex = 23;
-            // 
-            // adultCount
-            // 
-            this.adultCount.AutoSize = true;
-            this.adultCount.Location = new System.Drawing.Point(126, 65);
-            this.adultCount.Name = "adultCount";
-            this.adultCount.Size = new System.Drawing.Size(0, 13);
-            this.adultCount.TabIndex = 24;
-            // 
-            // seniorCount
-            // 
-            this.seniorCount.AutoSize = true;
-            this.seniorCount.Location = new System.Drawing.Point(126, 84);
-            this.seniorCount.Name = "seniorCount";
-            this.seniorCount.Size = new System.Drawing.Size(0, 13);
-            this.seniorCount.TabIndex = 25;
-            // 
-            // holidayCount
-            // 
-            this.holidayCount.AutoSize = true;
-            this.holidayCount.Location = new System.Drawing.Point(126, 104);
-            this.holidayCount.Name = "holidayCount";
-            this.holidayCount.Size = new System.Drawing.Size(0, 13);
-            this.holidayCount.TabIndex = 26;
-            // 
-            // weekendCount
-            // 
-            this.weekendCount.AutoSize = true;
-            this.weekendCount.Location = new System.Drawing.Point(126, 124);
-            this.weekendCount.Name = "weekendCount";
-            this.weekendCount.Size = new System.Drawing.Size(0, 13);
-            this.weekendCount.TabIndex = 27;
-            // 
-            // grossTotal
-            // 
-            this.grossTotal.AutoSize = true;
-            this.grossTotal.Location = new System.Drawing.Point(126, 146);
-            this.grossTotal.Name = "grossTotal";
-            this.grossTotal.Size = new System.Drawing.Size(0, 13);
-            this.grossTotal.TabIndex = 28;
-            // 
-            // netTotal
-            // 
-            this.netTotal.AutoSize = true;
-            this.netTotal.Font = new System.Drawing.Font("Myanmar Text", 9.75F, System.Drawing.FontStyle.Bold);
-            this.netTotal.Location = new System.Drawing.Point(125, 166);
-            this.netTotal.Name = "netTotal";
-            this.netTotal.Size = new System.Drawing.Size(0, 24);
-            this.netTotal.TabIndex = 29;
-            // 
             // TicketForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 486);
             this.Controls.Add(this.checkoutButton);
-            this.Controls.Add(this.Cancel);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nextPersonButton);
             this.Controls.Add(this.groupListBox);
@@ -532,7 +534,7 @@ namespace Coursework
         private Label ticketIdLabel;
         private Button nextPersonButton;
         private Button saveButton;
-        private Button Cancel;
+        private Button cancelButton;
         private Label netTotalLabel;
         private Label grossTotalLabel;
         private Label weekendDiscount;

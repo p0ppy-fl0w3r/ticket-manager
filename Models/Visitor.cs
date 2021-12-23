@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace Coursework.Models
 {
 
-    // TODO create more extension functions
     internal class Visitor
     {
         public int ticketId { get; set; }

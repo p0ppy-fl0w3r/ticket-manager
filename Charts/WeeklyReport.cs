@@ -26,7 +26,7 @@ namespace Coursework.Charts
 
         private void initData()
         {
-            // TODO add sorting
+
             // Get the first and the last date
             List<Visitor> sortedVisitors = Utils.visitorsList.OrderBy(v => DateTime.Parse(v.startTime)).ToList();
 
@@ -101,13 +101,12 @@ namespace Coursework.Charts
 
         private void weekValueChanged(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("The value was changed to " + weekCombo.SelectedItem.ToString());
-
             setTableData(weekCombo.SelectedItem.ToString(), null);
             setChartData(weekCombo.SelectedItem.ToString(), false);
         }
 
-        private class WeekData { 
+        private class WeekData
+        {
             public string WeekDay { get; set; }
             public int Count { get; set; }
             public double Income { get; set; }
@@ -126,7 +125,7 @@ namespace Coursework.Charts
             weeklyDataTable.Controls.Clear();
             initTable();
 
-            List<WeekData> weekTableData = new List<WeekData>();    
+            List<WeekData> weekTableData = new List<WeekData>();
 
 
             // Get the weekly visitor data
@@ -161,7 +160,7 @@ namespace Coursework.Charts
             {
                 mergeSort(weekTableData, (bool)sortByIncome);
             }
-            
+
             // Display the weekly visitor data in table.
             for (int i = 0; i < weekTableData.Count; i++)
             {
@@ -186,10 +185,10 @@ namespace Coursework.Charts
             });
 
             weeklyDataChart.Series[0].XValueMember = "WeekDay";
-            weeklyDataChart.Series[0].YValueMembers = isIncome? "Income": "Count";
+            weeklyDataChart.Series[0].YValueMembers = isIncome ? "Income" : "Count";
 
             weeklyDataChart.Series[0].Name = isIncome ? "Total Income" : "No. Visitors";
-            weeklyDataChart.Series[0].Color = isIncome ? Color.MediumTurquoise: Color.Crimson;
+            weeklyDataChart.Series[0].Color = isIncome ? Color.MediumTurquoise : Color.Crimson;
 
 
             weeklyDataChart.DataSource = chartData;
@@ -198,23 +197,28 @@ namespace Coursework.Charts
 
         private void sortIndexChanged(object sender, EventArgs e)
         {
-            // TODO change chart series name
-            // TODO sort the table
-            // TODO see coursework guidelines no.3(page 4)
-            // TODO enclose in try catch
-            if (sortCombo.SelectedIndex == 0)
+            // Running the program in debug mode will cause the application to stop here if there's no visitor data. 
+            try
             {
-                // Sort by number of visitors
-                setTableData(weekCombo.SelectedItem.ToString(), false);
+                if (sortCombo.SelectedIndex == 0)
+                {
+                    // Sort by number of visitors
+                    setTableData(weekCombo.SelectedItem.ToString(), false);
+                }
+                else if (sortCombo.SelectedIndex == 1)
+                {
+                    // Sort by total income
+                    setTableData(weekCombo.SelectedItem.ToString(), true);
+                }
+                else
+                {
+                    setTableData(weekCombo.SelectedItem.ToString(), null);
+                }
             }
-            else if (sortCombo.SelectedIndex == 1)
+            catch (NullReferenceException)
             {
-                // Sort by total income
-                setTableData(weekCombo.SelectedItem.ToString(), true);
-            }
-            else
-            {
-                setTableData(weekCombo.SelectedItem.ToString(), null);
+
+                MessageBox.Show("The visitor data is missing. Make sure there's at least one visitor's data.", "Data Missing.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -281,7 +285,7 @@ namespace Coursework.Charts
             {
                 setChartData(weekCombo.SelectedItem.ToString(), true);
             }
-            
+
         }
     }
 }
