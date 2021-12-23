@@ -42,11 +42,6 @@ namespace Coursework
             Utils.currentForm = Constants.ADMIN_FORM;
         }
 
-        private void financialReportButton_Click(object sender, EventArgs e)
-        {
-            Utils.navigate(new FinancialReport(), chartPanel);
-        }
-
         private void backMouseEnter(object sender, EventArgs e)
         {
             backImage.Size = new Size(100+8, 50+4);
