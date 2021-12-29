@@ -60,9 +60,15 @@ namespace Coursework
 
             var decimalKeyValues = exceptionKeyValues.Union(numericDecimals);
 
-            if (Char.IsDigit((char)e.KeyValue) || (allowDecimal ? decimalKeyValues : exceptionKeyValues).Contains(e.KeyValue))
+            if (char.IsDigit((char)e.KeyValue) || (allowDecimal ? decimalKeyValues : exceptionKeyValues).Contains(e.KeyValue))
             {
                 ((TextBox)sender).ReadOnly = false;
+
+                if (allowDecimal && ((TextBox)sender).Text.Contains(".") && numericDecimals.Contains(e.KeyValue))
+                {
+                    ((TextBox)sender).ReadOnly = true;
+                }
+
             }
             else
             {
