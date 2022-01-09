@@ -223,8 +223,7 @@ namespace Coursework.Charts
         }
 
 
-        // TODO write doc comment
-        private static void mergeSort(List<WeekData> arr, bool isIncome)
+        private void mergeSort(List<WeekData> arr, bool isIncome)
         {
             if (arr.Count == 1)
             {

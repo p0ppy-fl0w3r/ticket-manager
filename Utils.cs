@@ -98,6 +98,10 @@ namespace Coursework
 
         }
 
+        /// <summary>
+        /// Gets the last Identifiers
+        /// </summary>
+        /// <returns></returns>
         public static Identifiers getLastId()
         {
 
@@ -113,6 +117,11 @@ namespace Coursework
             return mIdentifier;
         }
 
+        /// <summary>
+        /// Replaces the contents of a file with "data".
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="fileName"></param>
         public static void writeToFile(string data, string fileName)
         {
 
@@ -125,6 +134,12 @@ namespace Coursework
 
         }
 
+        /// <summary>
+        /// Gets data from a file in a list of <T>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static List<T> getFromFile<T>(string fileName)
         {
 
@@ -149,9 +164,13 @@ namespace Coursework
             return new List<T>();
         }
 
+        /// <summary>
+        /// Appends the data on the specified file. 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="filename"></param>
         public static void appendOnFile(string data, string filename)
         {
-
 
             if (!File.Exists(filename))
             {
@@ -182,6 +201,11 @@ namespace Coursework
             animationThread.Start();
         }
 
+        /// <summary>
+        /// Returns true if the provided DateTime is a weekend.
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         public static bool isWeekend(DateTime dateTime) {
             return dateTime.DayOfWeek == DayOfWeek.Sunday || dateTime.DayOfWeek == DayOfWeek.Saturday;
         }
@@ -195,10 +219,6 @@ namespace Coursework
         public static string properDoubleString(double number){
             return string.Format("{0:00.0}", number);
         }
-
-
-        // DEBUG
-      
 
     }
 }

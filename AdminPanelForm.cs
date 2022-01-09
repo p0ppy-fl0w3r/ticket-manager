@@ -30,7 +30,7 @@ namespace Coursework
             setTicketDisplay();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void logoutClicked(object sender, EventArgs e)
         {
             Utils.currentForm = Constants.LOGIN_FORM;
         }

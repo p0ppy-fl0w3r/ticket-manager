@@ -81,7 +81,7 @@ namespace Coursework
             this.logOutButton.TabIndex = 0;
             this.logOutButton.Text = "Log out";
             this.logOutButton.UseVisualStyleBackColor = true;
-            this.logOutButton.Click += new System.EventHandler(this.button1_Click);
+            this.logOutButton.Click += new System.EventHandler(this.logoutClicked);
             // 
             // priceLabel
             // 
